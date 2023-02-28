@@ -51,10 +51,76 @@ flutter pub add omast
 ```
 
 ## Nodes
-### Element
-### GreaterElement
-### Lesser Element
-### Object
+
+### `Parent`
+
+```idl
+interface Parent <: UnistParent {
+  children: [Element | Object]
+}
+```
+
+**Parent** ([UnistParent][dfn-unist-parent]) represents an abstract interface in mdast containing other nodes (said to be children).
+Its content is limited to only either Element or Object.
+
+### `Literal`
+
+```
+interface Literal <: UnistLiteral {
+  value: string
+}
+```
+
+**Literal** ([**UnistLiteral**][dfn-unist-literal]) represents an abstract interface in mdast containing a value.
+
+Its `value` field is a `string`.
+
+### `Root`
+Root (Parent) represents a document.
+
+```idl
+interface Root <: Parent {
+  type: 'root'
+}
+```
+### `Element`
+
+Elements are syntactic components that exist at the same or greater scope than a paragraph.
+
+```idl
+interface Element <: Parent {
+  children: [ElementContent]
+}
+```
+
+### `GreaterElement`
+A container can contain directly any other [Element] or [GreaterElement]
+
+```idl
+interface GreaterElement <: Parent {
+  children: [GreaterElementContent]
+}
+```
+### `Lesser Element`
+
+Lesser elements are elements that cannot contain any other elements.
+
+```idl
+interface LesserElement <: Parent {
+  children: [GreaterElementContent]
+}
+```
+
+### `Object`
+
+```idl
+interface Object <: Node {
+  value: any
+}
+```
+
+Objects are syntactic components that exist with a smaller scope than a paragraph, and so can be contained within a paragraph.
+
 ### Heading
 ### Section
 ### Center Block
@@ -102,13 +168,71 @@ flutter pub add omast
 ### Superscript
 ### Table Cell
 ### Timestamp
-### Bold
-### Italic
-### Underline
-### Verbatim
-### Code
-### StrikeThrough
-### Plain Text
+### `Text`
+
+Any string that doesn’t match any other object can be considered a plain text object.
+
+```idl
+interface Text <: Literal {
+  type: 'text'
+}
+```
+
+For example, the following orgmode:
+
+```org
+Alpha bravo charlie.
+```
+
+Yields:
+
+```js
+{type: 'text', value: 'Alpha bravo charlie.'}
+```
+
+### Text Markup
+
+```
+interface TextMarkup <: Literal {
+  type: 'bold' | 'italic' | 'underline' | 'verbatim' | 'code' | 'strike-through'
+}
+```
+
+[Text](#Text) can be emphasized. There are six text markup objects to emphasis a text as follows:
+
+- *, a bold object,
+- /, an italic object,
+- _ an underline object,
+- =, a verbatim object,
+- ~, a code object
+- +, a strike-through object.
+
+For example, the following markdown:
+
+```org
+*alpha*, /italic/
+```
+
+Yields:
+
+```js
+{
+  type: 'paragraph',
+  children: [
+    {
+      type: 'bold', value: 'alpha'
+    },
+    {
+      type:'text',
+      value:','}
+    {
+      type: 'italic', value: 'bravo'
+    }
+  ]
+}
+```
+
+Text markup can not contain another text markup.
 
 ## Glossary
 
@@ -212,3 +336,8 @@ abide by its terms.
 
 [hast]: https://github.com/syntax-tree/hast
 
+[dfn-node]: https://github.com/syntax-tree/unist#node
+
+[dfn-unist-parent]: https://github.com/syntax-tree/unist#parent
+
+[dfn-unist-literal]: https://github.com/syntax-tree/unist#literal
