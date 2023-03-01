@@ -149,7 +149,6 @@ Objects are syntactic components that exist with a smaller scope than a paragrap
 ### Affiliated Keyword
 ### LaTeX Environment
 ### Node Propertie
-### Paragraph
 ### Table Row
 ### Entity
 ### LaTeX Fragment
@@ -168,6 +167,35 @@ Objects are syntactic components that exist with a smaller scope than a paragrap
 ### Superscript
 ### Table Cell
 ### Timestamp
+### `Paragraph`
+
+```idl
+interface Paragraph <: Parent {
+  type: 'paragraph'
+  children: [Object]
+}
+```
+
+Paragraphs are the default element, which means that any unrecognized context is a paragraph.
+
+Paragraphs can contain the standard set of objects.
+
+For example, the following orgmode:
+
+```org
+Alpha bravo charlie.
+```
+
+yields:
+
+```js
+{
+  type: 'paragraph',
+  children: [
+    {type: 'text', value: 'Alpha bravo charlie.'}
+  ]
+}
+```
 ### `Text`
 
 Any string that doesn’t match any other object can be considered a plain text object.
@@ -190,7 +218,7 @@ Yields:
 {type: 'text', value: 'Alpha bravo charlie.'}
 ```
 
-### Text Markup
+### Text Markup`
 
 ```
 interface TextMarkup <: Literal {
