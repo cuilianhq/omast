@@ -342,6 +342,46 @@ Yields:
 ```
 
 ### `Soruce Block`
+
+```idl
+interface SourceBlock <: GreaterElement {
+  type: 'sourceBlock'
+  language: string
+  arguments: string
+  contents: string?
+}
+```
+
+**Source Block* represents a block of text that is source code.
+
+A `language` field must be present.
+It represents the language of computer code being marked up.
+
+If `language` field is present, a `arguments` field can be present. It represents the arguments of the interpreter.
+
+A `contents` field can be present.
+It represents the contents of the source code.
+
+for example, the following org:
+
+```org
+#+BEGIN_SRC js -n2 :var x=1
+console.log('hello world');
+#+EMD_SRC
+```
+
+Yields:
+
+```json
+{
+  "type": "sourceBlock",
+  "language": "js",
+  "switches": "-n2",
+  "arguments": ":var x=1",
+  "contents": "console.log('hello world');"
+}
+```
+
 ### `Verse Block`
 
 ```idl
