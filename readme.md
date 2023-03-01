@@ -17,6 +17,55 @@ See [releases][] for released documents.
     *   [Where this specification fits](#where-this-specification-fits)
 *   [Types](#types)
 *   [Nodes](#nodes)
+    *   [`Parent`](#parent)
+    *   [`Literal`](#literal)
+    *   [`Root`](#root)
+    *   [`GreaterElement`](#greaterelement)
+    *   [`LesserElement`](#lesserelement)
+    *   [`Element`](#element)
+    *   [`Object`](#object)
+    *   [`Heading`](#heading)
+    *   [`Section`](#section)
+    *   [`Paragraph`](#paragraph)
+    *   [`Center Block`](#center-block)
+    *   [`Quote Block`](#quote-block)
+    *   [`Drawer`](#drawer)
+    *   [`Property Drawer`](#property-drawer)
+    *   [`Dynamic Block`](#dynamic-block)
+    *   [`Footnote Definitions`](#footnote-definitions)
+    *   [`Inline Task`](#inline-task)
+    *   [`List Item`](#list-item)
+    *   [`Plain List`](#plain-list)
+    *   [`Table`](#table)
+    *   [`Comment Block`](#comment-block)
+    *   [`Example Block`](#example-block)
+    *   [`Export Block`](#export-block)
+    *   [`Soruce Block`](#soruce-block)
+    *   [`Verse Block`](#verse-block)
+    *   [`Clock`](#clock)
+    *   [`Diary Sexp`](#diary-sexp)
+    *   [`Planning`](#planning)
+    *   [`Comment`](#comment)
+    *   [`Fixed Width`](#fixed-width)
+    *   [`Horizontal Rule`](#horizontal-rule)
+    *   [`Keyword`](#keyword)
+    *   [`Babel Call`](#babel-call)
+    *   [`Affiliated Keyword`](#affiliated-keyword)
+    *   [`LaTeX Environment`](#latex-environment)
+    *   [`Node Properties`](#node-properties)
+    *   [`Table Row`](#table-row)
+    *   [`Entity`](#entity)
+    *   [`LaTeX Fragment`](#latex-fragment)
+    *   [`Export Snippet`](#export-snippet)
+    *   [`Footnote Reference`](#footnote-reference)
+    *   [`Citation`](#citation)
+    *   [`Citation Reference`](#citation-reference)
+    *   [`Inline BabelCall`](#inline-babelcall)
+    *   [`Inline Src Block`](#inline-src-block)
+    *   [`Line Break`](#line-break)
+    *   [`Link`](#link)
+    *   [`Text`](#text)
+    *   [`Text Markup`](#text-markup)
 *   [Glossary](#glossary)
 *   [References](#references)
 *   [Related](#related)
@@ -121,44 +170,44 @@ interface Object <: Node {
 
 Objects are syntactic components that exist with a smaller scope than a paragraph, and so can be contained within a paragraph.
 
-### Heading
-### Section
-### Center Block
-### Quote Block
-### Drawer
-### Property Drawer
-### Dynamic Block
-### Footnote Definitions
-### Inline Task
-### List-Item
-### Plain List
-### Table
-### Comment Block
-### Example Block
-### Export Block
-### Soruce Block
-### Verse Block
-### Clock
-### Diary Sexp
-### Planning
-### Comment
-### Fixed Width
-### Horizontal Rule
-### Keyword
-### Babel Call
-### Affiliated Keyword
-### LaTeX Environment
-### Node Propertie
-### Table Row
-### Entity
-### LaTeX Fragment
-### Export Snippet
-### Footnote Reference
-### Citation
-### Citation Reference
-### Inline BabelCall
-### Inline SrcBlock
-### Line Break
+### `Heading`
+### `Section`
+### `Center Block`
+### `Quote Block`
+### `Drawer`
+### `Property Drawer`
+### `Dynamic Block`
+### `Footnote Definitions`
+### `Inline Task`
+### `List Item`
+### `Plain List`
+### `Table`
+### `Comment Block`
+### `Example Block`
+### `Export Block`
+### `Soruce Block`
+### `Verse Block`
+### `Clock`
+### `Diary Sexp`
+### `Planning`
+### `Comment`
+### `Fixed Width`
+### `Horizontal Rule`
+### `Keyword`
+### `Babel Call`
+### `Affiliated Keyword`
+### `LaTeX Environment`
+### `Node Propertie`
+### `Table Row`
+### `Entity`
+### `LaTeX Fragment`
+### `Export Snippet`
+### `Footnote Reference`
+### `Citation`
+### `Citation Reference`
+### `Inline BabelCall`
+### `Inline SrcBlock`
+### `Line Break`
 ### `Link`
 
 ```idl
@@ -341,7 +390,7 @@ Yields:
 {type: 'text', value: 'Alpha bravo charlie.'}
 ```
 
-### Text Markup`
+### `Text Markup`
 
 ```
 interface TextMarkup <: Literal {
