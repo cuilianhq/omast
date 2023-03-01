@@ -218,11 +218,13 @@ Yields:
 ### `Comment Block`
 
 ```idl
-interface CommentBlock <: GreaterElement {
+interface CommentBlock <: LesserElement {
   type: 'commentBlock'
-  children: [GreaterElementContent]
+  children: [Paragraph]
 }
 ```
+
+**Comment Block** represents a block of text that is a comment. It can contain markup.
 
 for example, the following org:
 
@@ -260,11 +262,10 @@ Yields:
   ]
 }
 ```
-
 ### `Example Block`
 
 ```idl
-interface ExampleBlock <: GreaterElement {
+interface ExampleBlock <: LesserElement {
   type: 'exampleBlock'
   children: [Paragraph]
 }
@@ -307,11 +308,10 @@ Yields:
   ]
 }
 ```
-
 ### `Export Block`
 
 ```idl
-interface ExportBlock <: GreaterElement {
+interface ExportBlock <: LesserElement {
   type: 'exportBlock'
   backend: string
   value: string
@@ -340,7 +340,6 @@ Yields:
   "value": "<html></html>"
 }
 ```
-
 ### `Soruce Block`
 
 ```idl
@@ -381,13 +380,12 @@ Yields:
   "contents": "console.log('hello world');"
 }
 ```
-
 ### `Verse Block`
 
 ```idl
-interface VerseBlock <: GreaterElement {
+interface VerseBlock <: LesserElement {
   type: 'verseBlock'
-  children: [Paragraph]
+  value: string?
 }
 ```
 
@@ -407,26 +405,7 @@ Yields:
 ```json
 {
   "type": "verseBlock",
-  "children": [
-    {
-      "type": "paragraph",
-      "children": [
-        {
-          "type": "text",
-          "value": "    first line"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "children": [
-        {
-          "type": "text",
-          "value": "second line"
-        }
-      ]
-    }
-  ]
+  "value": "   first line\nsecond line"
 }
 ```
 
