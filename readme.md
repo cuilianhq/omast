@@ -262,6 +262,52 @@ Yields:
 ```
 
 ### `Example Block`
+
+```idl
+interface ExampleBlock <: GreaterElement {
+  type: 'exampleBlock'
+  children: [Paragraph]
+}
+```
+*Example Block* represents a block of text that is an example. It is not subject to markup.
+
+for example, the following org:
+
+```org
+#+BEGIN_EXAMPLE
+first line
+second *line*
+#+END_EXAMPLE
+```
+
+Yields:
+
+```json
+{
+  "type": "exampleBlock",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "first line"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "second *line*"
+        }
+      ]
+    }
+  ]
+}
+```
+
 ### `Export Block`
 ### `Soruce Block`
 ### `Verse Block`
