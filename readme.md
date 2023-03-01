@@ -15,7 +15,6 @@ See [releases][] for released documents.
 
 *   [Introduction](#introduction)
     *   [Where this specification fits](#where-this-specification-fits)
-*   [Types](#types)
 *   [Nodes](#nodes)
     *   [`Parent`](#parent)
     *   [`Literal`](#literal)
@@ -87,19 +86,6 @@ This specification is written in a [Web IDL][webidl]-like grammar.
 omast extends [unist][], a format for syntax trees, to benefit from its ecosystem of utilities.
 
 omast is not limited to Dart and can be used in other programming languages.
-
-## Types
-
-If you are using Dart, you can use the omast types by installing them
-with pub.dev:
-
-```sh
-dart pub add omast
-```
-
-```sh
-flutter pub add omast
-```
 
 ## Nodes
 
