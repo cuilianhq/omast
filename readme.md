@@ -311,6 +311,53 @@ Yields:
 ### `Export Block`
 ### `Soruce Block`
 ### `Verse Block`
+
+```idl
+interface VerseBlock <: GreaterElement {
+  type: 'verseBlock'
+  children: [Paragraph]
+}
+```
+
+**Verse Block** represents a block of text that is a verse. It is not subject to markup and reserve idents.
+
+for example, the following org:
+
+```org
+#+BEGIN_VERSE
+   first line
+second line
+#+END_VERSE
+```
+
+Yields:
+
+```json
+{
+  "type": "verseBlock",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "    first line"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "second line"
+        }
+      ]
+    }
+  ]
+}
+```
+
 ### `Clock`
 ### `Diary Sexp`
 ### `Planning`
