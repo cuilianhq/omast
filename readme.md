@@ -161,7 +161,52 @@ Objects are syntactic components that exist with a smaller scope than a paragrap
 ### `Heading`
 ### `Section`
 ### `Center Block`
-### `Quote Block`
+
+```idl
+interface CenterBlock <: GreaterElement {
+  type: 'centerBlock'
+  children: [GreaterElementContent]
+}
+```
+
+**Center Block** represents a block of text that is centered.
+
+for example, the following org:
+
+```org
+#+BEGIN_CENTER
+first line
+second line
+#+END_CENTER
+```
+
+Yields:
+
+```json
+{
+  "type": "centerBlock",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "first line"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "second line"
+        }
+      ]
+    }
+  ]
+}
+```
 ### `Drawer`
 ### `Property Drawer`
 ### `Dynamic Block`
