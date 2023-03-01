@@ -309,6 +309,38 @@ Yields:
 ```
 
 ### `Export Block`
+
+```idl
+interface ExportBlock <: GreaterElement {
+  type: 'exportBlock'
+  backend: string
+  value: string
+}
+```
+
+**Export Block** represents a block of text that is exported to a backend.
+
+A `backend` field must be present.
+It represents the backend that the block is exported to.
+
+for example, the following org:
+
+```org
+#+BEGIN_EXPORT html
+<html></html>
+#+END_EXPORT
+```
+
+Yields:
+
+```json
+{
+  "type": "exportBlock",
+  "backend": "html",
+  "value": "<html></html>"
+}
+```
+
 ### `Soruce Block`
 ### `Verse Block`
 
