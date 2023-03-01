@@ -159,7 +159,130 @@ Objects are syntactic components that exist with a smaller scope than a paragrap
 ### Inline BabelCall
 ### Inline SrcBlock
 ### Line Break
-### Link
+### `Link`
+
+```idl
+interface Link <: Object {
+  type: 'link'
+  subType: 'regular' | 'radio' | 'angle' | 'plain'
+  rawLink: string
+  description: string
+}
+```
+
+Links are syntactic components that exist with a smaller scope than a paragraph, and so can be contained within a paragraph.
+
+`subType` must be present.
+It represents the subtype of the link. There are four subtypes, which are: `regular`, `radio`, `angle`, and `plain`.
+
+`rawLink` must be present.
+It represents the raw link string, which is the link string before any processing.
+
+`description` can be present.
+It represents the description of the link.
+
+#### `Radio Link`
+
+#### `Plain link`
+
+```interface PlainLink <: Link {
+  type: 'link'
+  subType: 'plain'
+  pathplain: string
+}
+```
+
+for example:
+
+```org
+https://orgmode.org.
+```
+
+yield:
+
+```js
+{
+  type: 'link',
+  subType: 'plain',
+  rawLink: 'https://orgmode.org',
+  protocol: 'https',
+  pathplain: 'orgmode.org'
+}
+```
+
+#### `Angle Link`
+
+#### `Regular Link`
+
+```idl
+interface RegularLink <: Link {
+  type: 'link'
+  pathreg: PathReg
+}
+```
+
+**Regular links** are the most common type of link, and structured according to one of the following two patterns:
+[[PATHREG]] or [[PATHREG][DESCRIPTION]].
+
+
+PATHREG is a union type of all seven following
+annotated patterns
+
+```idl
+interface ProtocolPath PathReg {
+  type: 'protocol'
+  protocol: string
+  pathinner: string
+}
+
+interface FilePath <: PathReg {
+  type: 'file'
+  filename: string
+}
+
+interface IdPath <: PathReg {
+  type: 'id'
+  id: string
+}
+
+interface CustomId <: PathReg {
+  type: 'custom-id'
+  customId: string
+}
+
+interface CodeRef <: PathReg {
+  type: 'coderef'
+  codeRef: string
+}
+
+interface Fuzzy <: PathReg {
+  type: 'fuzzy'
+  fuzzy: string
+}
+```
+
+for example:
+
+```org
+[[https://example.com][Example]]
+```
+
+yield:
+
+```js
+{
+  type: 'link',
+  subType: 'regular',
+  rawLink: 'https://example.com',
+  pathreg: {
+    type: 'protocol',
+    protocol: 'https',
+    pathinner: 'example.com',
+  }
+  description: 'Example'
+}
+```
+
 ### Macro
 ### Target
 ### Statistic Cookie
