@@ -66,6 +66,8 @@ See [releases][] for released documents.
     *   [`Link`](#link)
     *   [`Text`](#text)
     *   [`Text Markup`](#text-markup)
+*   [Mixin](#mixin)
+    *   [Resource](#resource)
 *   [Glossary](#glossary)
 *   [References](#references)
 *   [Related](#related)
@@ -234,101 +236,135 @@ It represents the description of the link.
 
 #### `Plain link`
 
-```interface PlainLink <: Link {
+```idl
+interface PlainLink <: Link {
   type: 'link'
   subType: 'plain'
-  pathplain: string
 }
+
+PlainLink includes Resource
 ```
 
-for example:
+**Plian Link** includes **Resource** ([Resource](#resource)).
+
+for example, the following orgmode:
 
 ```org
 https://orgmode.org.
 ```
 
-yield:
+Yields:
 
 ```js
 {
   type: 'link',
   subType: 'plain',
   rawLink: 'https://orgmode.org',
+  resourceType: 'protocol',
   protocol: 'https',
-  pathplain: 'orgmode.org'
+  path: 'orgmode.org'
 }
 ```
 
 #### `Angle Link`
 
+```idl
+interface AngleLink <: Link {
+  type: 'link'
+  subType: 'angle'
+}
+
+AngleLink includes Resource
+```
+
+Angle-type essentially provide a method to disambiguate plain links from surrounding text.
+
+for example, the following orgmode:
+
+```org
+<https:example.com>
+```
+
+Yields:
+
+```js
+{
+  type: 'link',
+  subType: 'angle',
+  rawLink: 'https:example.com',
+  resourceType: 'protocol',
+  protocol: 'https',
+  path: 'example.com'
+}
+```
+
 #### `Regular Link`
 
 ```idl
 interface RegularLink <: Link {
-  type: 'link'
-  pathreg: PathReg
+  subType: 'regular'
 }
+
+RegularLink includes Resource
 ```
 
 **Regular links** are the most common type of link, and structured according to one of the following two patterns:
 [[PATHREG]] or [[PATHREG][DESCRIPTION]].
 
+**Regular links** includes [Resource](#resource).
 
-PATHREG is a union type of all seven following
-annotated patterns
-
-```idl
-interface ProtocolPath PathReg {
-  type: 'protocol'
-  protocol: string
-  pathinner: string
-}
-
-interface FilePath <: PathReg {
-  type: 'file'
-  filename: string
-}
-
-interface IdPath <: PathReg {
-  type: 'id'
-  id: string
-}
-
-interface CustomId <: PathReg {
-  type: 'custom-id'
-  customId: string
-}
-
-interface CodeRef <: PathReg {
-  type: 'coderef'
-  codeRef: string
-}
-
-interface Fuzzy <: PathReg {
-  type: 'fuzzy'
-  fuzzy: string
-}
-```
-
-for example:
+for example, the following orgmode:
 
 ```org
 [[https://example.com][Example]]
 ```
 
-yield:
+Yields:
 
 ```js
 {
   type: 'link',
   subType: 'regular',
   rawLink: 'https://example.com',
-  pathreg: {
-    type: 'protocol',
-    protocol: 'https',
-    pathinner: 'example.com',
-  }
+  type: 'protocol',
+  protocol: 'https',
+  pathinner: 'example.com',
   description: 'Example'
+}
+```
+and the following orgmode:
+
+```org
+[[a.png]]
+```
+
+Yields:
+
+```js
+{
+  type: 'link',
+  subType: 'regular',
+  rawLink: 'a.png',
+  resourceType: 'file',
+  filename: 'a.png'
+}
+```
+
+and the following orgmode:
+
+```org
+[[id:1234]]
+```
+
+Yields:
+
+```js
+{
+  type: 'link',
+  subType: 'regular',
+  rawLink: 'id:1234',
+  resourceType: 'id',
+  id: '1234'
 }
 ```
 
@@ -433,6 +469,97 @@ Yields:
 ```
 
 Text markup can not contain another text markup.
+
+## `Mixin`
+
+### `Resource`
+
+```idl
+interface mixin Resource {
+  pathType: 'file' | 'id' | 'custom-id' | 'fuzzy' | 'protocol'
+}
+```
+
+*Resource* represents a reference to resource.
+
+A `pathType` field must be present.
+It represents the type of the path. There are five types, which are: `file`, `id`, `custom-id`, `fuzzy`, and `protocol`.
+
+#### File
+
+```idl
+interface File <: Resource {
+  resourceType: 'file'
+  filename: string
+}
+```
+
+A `filename` field must be present.
+It represents an absolute or relative file path.
+
+#### Protocol
+
+```idl
+interface Protocol <: Resource {
+  resourceType: 'protocol'
+  protocol: string
+  path: string
+}
+```
+
+A `protocol` field must be present.
+It represents the protocol of the link. The defualt value is one of `shell`, `news`, `mailto`, `https`, `http`, `ftp`, `help`, `file`, and `elisp`.
+
+A `path` field must be present.
+It represents the inner part of the path.
+
+#### ID
+
+```idl
+interface Id <: Resource {
+  resourceType: 'id'
+  id: string
+}
+```
+
+A `id` field must be present.
+It represents the id of the link.
+
+#### Custom ID
+
+```idl
+interface CustomId <: Resource {
+  resourceType: 'custom-id'
+  customId: string
+}
+```
+
+A `customId` field must be present.
+It represents the custom id of the link.
+
+#### Code Ref
+
+```idl
+interface CodeRef <: Resource {
+  resourceType: 'coderef'
+  codeRef: string
+}
+```
+
+A `codeRef` field must be present.
+It represents the code ref of the link.
+
+#### Fuzzy
+
+```idl
+interface Fuzzy <: Resource {
+  resourceType: 'fuzzy'
+  fuzzy: string
+}
+```
+
+A `fuzzy` field must be present.
+It represents the fuzzy path of the link.
 
 ## Glossary
 
