@@ -140,13 +140,20 @@ interface GreaterElement <: Parent {
 ```
 ### `Lesser Element`
 
-Lesser elements are elements that cannot contain any other elements.
-
 ```idl
-interface LesserElement <: Parent {
-  children: [GreaterElementContent]
+interface LesserElement <: Element {
+  value: string?
+  children: [Object?]
 }
 ```
+
+Lesser elements ([Element](#element)) are elements that cannot contain any other elements. some of them contain objects.
+
+A `value` field can be present.
+It represents the CONTENTS of the element.
+
+A `children` must be present.
+It represents the children of the element. If `value` field is present, a `children` must be an empty list.
 
 ### `Object`
 
@@ -267,7 +274,7 @@ Yields:
 ```idl
 interface ExampleBlock <: LesserElement {
   type: 'exampleBlock'
-  children: [Paragraph]
+  value: string?
 }
 ```
 *Example Block* represents a block of text that is an example. It is not subject to markup.
@@ -286,28 +293,10 @@ Yields:
 ```json
 {
   "type": "exampleBlock",
-  "children": [
-    {
-      "type": "paragraph",
-      "children": [
-        {
-          "type": "text",
-          "value": "first line"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "children": [
-        {
-          "type": "text",
-          "value": "second *line*"
-        }
-      ]
-    }
-  ]
+  "value": "first line\nsecond *line*"
 }
 ```
+
 ### `Export Block`
 
 ```idl
