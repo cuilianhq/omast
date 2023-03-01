@@ -216,6 +216,51 @@ Yields:
 ### `Plain List`
 ### `Table`
 ### `Comment Block`
+
+```idl
+interface CommentBlock <: GreaterElement {
+  type: 'commentBlock'
+  children: [GreaterElementContent]
+}
+```
+
+for example, the following org:
+
+```org
+#+BEGIN_COMMENT
+first line
+second line
+#+END_COMMENT
+```
+
+Yields:
+
+```json
+{
+  "type": "commentBlock",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "first line"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "second line"
+        }
+      ]
+    }
+  ]
+}
+```
+
 ### `Example Block`
 ### `Export Block`
 ### `Soruce Block`
