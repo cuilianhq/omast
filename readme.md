@@ -422,6 +422,39 @@ Yields:
 ### `Fixed Width`
 ### `Horizontal Rule`
 ### `Keyword`
+
+```idl
+interface Keyword <: Object {
+  type: 'keyword'
+  key: string
+  value: string?
+}
+```
+
+**Keyword** represents a keyword.
+
+A `key` field must be present.
+It represents the key of the keyword.
+
+A `value` field can be present.
+It represents the value of the keyword.
+
+for example, the following org:
+
+```org
+#+TITLE: Hello World
+```
+
+Yields:
+
+```json
+{
+  "type": "keyword",
+  "key": "TITLE",
+  "value": "Hello World"
+}
+```
+
 ### `Babel Call`
 ### `Affiliated Keyword`
 ### `LaTeX Environment`
