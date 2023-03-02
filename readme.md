@@ -711,6 +711,31 @@ Yields:
 ### `Comment`
 ### `Fixed Width`
 ### `Horizontal Rule`
+
+```idl
+interface HorizontalRule <: Node {
+  type: 'horizontal-rule'
+}
+
+HorizontalRule includes AffiliatedKeywords
+```
+
+**Horizontal Rule** ([Node](#dfn-node)) represents a horizontal rule.
+
+for example, the following content:
+
+```org
+-----
+```
+
+Yields:
+
+```json
+{
+  "type": "horizontal-rule"
+}
+```
+
 ### `Keyword`
 
 ```idl
