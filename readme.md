@@ -1104,7 +1104,7 @@ Yields:
 ```idl
 interface Subscript <: Object {
   type: 'subscript'
-  value: Text
+  value: string
 }
 ```
 
@@ -1128,9 +1128,7 @@ Yields:
     },
     {
       "type": "subscript",
-      "value": {
-        "type": "text", "value": "y"
-        }
+      "value": "y"
     }
   ]
 }
@@ -1141,7 +1139,7 @@ Yields:
 ```idl
 interface Superscript <: Object {
   type: 'superscript'
-  value: Text
+  value: string
 }
 ```
 
@@ -1165,9 +1163,7 @@ Yields:
     },
     {
       "type": "superscript",
-      "value": {
-        "type": "text", "value": "y"
-        }
+      "value": "y"
     }
   ]
 }
