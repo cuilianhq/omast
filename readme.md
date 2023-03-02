@@ -190,7 +190,7 @@ Objects are syntactic components that exist with a smaller scope than a paragrap
   depth: number
   title: Paragraph | Link
   commented: bool
-  keyword?: string
+  todoKeyword?: string
   priority?: string
   tags?: [string]
   children: [Section?]
@@ -208,7 +208,7 @@ It represents whether the heading is commented or not.
 A `title` field must be present.
 It represents the title of the heading.
 
-A `keyword` field can be present.
+A `todoKeyword` field can be present.
 It represents the *todo keyword* of the heading.
 
 A `priority` field can be present.
@@ -234,7 +234,7 @@ Yields:
   "type": "heading",
   "depth": 1,
   "commented": false,
-  "keyword": "TODO",
+  "todoKeyword": "TODO",
   "priority": "A",
   "tags": ["tag1", "tag2"],
   "title": {
@@ -294,8 +294,6 @@ Yields:
       "type": "heading",
       "depth": 1,
       "commented": false,
-      "todoKeyword": null,
-      "priority": null,
       "title": {
         "type": "paragraph",
         "children": [
