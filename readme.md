@@ -896,7 +896,103 @@ Yields:
 ```
 ### `Inline Task`
 ### `Plain List`
+
+```idl
+interface PlainList <: Node {
+  type: 'plain-list'
+  subType: 'unordered' | 'ordered' | 'descriptive'
+  children: [PlainList | ListItem]
+}
+
+PlainList includes AffiliatedKeywords
+```
+
+**Plain List** ([Parent](#parent)) represents a list of items.
+
+**Plain List** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+
+**Plain List** can contain [Plain List](#plain-list) and [List Item](#list-item).
+
+A `subType` field must be present.
+It represents the the list is either an ordered plain list or an unordered plain list or a descriptive list.
+
+for example, the following content:
+
+```org
+1. item 1
+2. [X] item 2
+   - some tag :: item 2.1
+```
+
+Yields:
+
+```json
+{
+  "type": "plain-list",
+  "subType": "ordered",
+  "children": [
+    {
+      "type": "list-item",
+      "children": [
+        {"type":"paragraph","children":[{"type":"text","value":"item 1"}]}
+      ]
+    },
+    {
+      "type": "list-item",
+      "children": [
+        {
+          "type":"paragraph",
+          "children":[
+            {"type":"text","value":"item 2"}
+          ]},
+        {
+          "type": "plain-list",
+           "subType": "descriptive",
+          "children": [
+           {
+             "type": "list-item",
+             "tag": "some tag",
+             "children": [
+               {
+                  "type":"paragraph",
+                  "children":[
+                    {"type":"text","value":"item 2.1"}
+                   ]
+                }
+             ]
+           }
+         ]
+      ],
+    }
+  ]
+}
+```
 ### `List Item`
+
+```idl
+interface ListItem <: Node {
+  type: 'list-item'
+  bullet: string
+  counterSet?: string
+  checkedBox?: 'on' | 'off' | 'trans'
+  tag?: [string]
+  children: [ListItemContent]
+}
+```
+
+A `bullet` field must be present.
+It represents the bullet of the item. the value is either asterisk (*), hyphen (-), or plus sign (+) or a number or a single letter (a-z)..
+
+A `counterSet` field can be present.
+It represents the counter set of the item.
+
+A `checkedBox` field can be present.
+It represents the state of the checkbox of the item.
+
+A `tag` field can be present.
+It represents the tag of the item.
+
+For an example of a list item, see [Plain List](#plain-list).
 ### `Table`
 ### `Table Row`
 ### `Table Cell`
