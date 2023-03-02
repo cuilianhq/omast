@@ -257,6 +257,69 @@ Yields:
 ```
 
 ### `Section`
+
+```idl
+interface Section <: Element {
+  type: 'section'
+  children: [ElementContent]
+}
+```
+
+**Sections** ([Element](#element)) contain one or more non-heading elements.
+
+for example, the following content:
+
+```org
+An introduction.
+* A Heading
+Some text.
+```
+
+Yields:
+
+```json
+{
+  "type": "section",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "An introduction."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "depth": 1,
+      "commented": false,
+      "todoKeyword": null,
+      "priority": null,
+      "title": {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "A Heading"
+          }
+        ]
+      },
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "Some text."
+            }
+          ]
+        }
+      ]
+  ]
+}
+```
+
 ### `Center Block`
 
 ```idl
