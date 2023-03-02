@@ -45,8 +45,8 @@ See [releases][] for released documents.
     - [`LaTeX Fragment`](#latex-fragment)
     - [`Entity`](#entity)
     - [`Inline Task`](#inline-task)
-    - [`List Item`](#list-item)
     - [`Plain List`](#plain-list)
+    - [`List Item`](#list-item)
     - [`Table`](#table)
     - [`Table Row`](#table-row)
     - [`Table Cell`](#table-cell)
@@ -895,8 +895,8 @@ Yields:
 }
 ```
 ### `Inline Task`
-### `List Item`
 ### `Plain List`
+### `List Item`
 ### `Table`
 ### `Table Row`
 ### `Table Cell`
