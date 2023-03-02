@@ -26,6 +26,10 @@ See [releases][] for released documents.
     - [`Lesser Element`](#lesser-element)
     - [`Object`](#object)
     - [`Heading`](#heading)
+    - [`Planning`](#planning)
+    - [`Timestamp`](#timestamp)
+    - [`Clock`](#clock)
+    - [`Diary Sexp`](#diary-sexp)
     - [`Section`](#section)
     - [`Drawer`](#drawer)
     - [`Property Drawer`](#property-drawer)
@@ -43,9 +47,6 @@ See [releases][] for released documents.
     - [`Export Block`](#export-block)
     - [`Source Block`](#source-block)
     - [`Verse Block`](#verse-block)
-    - [`Clock`](#clock)
-    - [`Diary Sexp`](#diary-sexp)
-    - [`Planning`](#planning)
     - [`Comment`](#comment)
     - [`Fixed Width`](#fixed-width)
     - [`Horizontal Rule`](#horizontal-rule)
@@ -74,7 +75,6 @@ See [releases][] for released documents.
     - [`Statistic Cookie`](#statistic-cookie)
     - [`Subscript`](#subscript)
     - [`Superscript`](#superscript)
-    - [`Timestamp`](#timestamp)
     - [`Paragraph`](#paragraph)
     - [`Text`](#text)
     - [`Text Markup`](#text-markup)
@@ -262,6 +262,104 @@ Yields:
 }
 ```
 
+### `Planning`
+
+```idl
+interface Planning <: Node {
+  type: 'planning'
+  scheduled: Timestamp?
+  deadline: Timestamp?
+  closed: Timestamp?
+}
+```
+
+**Planning** ([Node](#dfn-node)) represents a planning.
+
+A `scheduled` field can be present.
+It represents the scheduled time of the planning.
+
+A `deadline` field can be present.
+It represents the deadline of the planning.
+
+A `closed` field can be present.
+It represents the closed time of the planning.
+
+for example, the following org:
+
+```org
+    SCHEDULED: <1999-03-31 Wed>
+```
+
+Yields:
+
+```json
+{
+  "type": "planning",
+  "scheduled": {
+    "type": "timestamp",
+    "start": "Wed Mar 31 1999 00:00:00"
+  }
+}
+```
+### `Timestamp`
+
+```idl
+interface Timestamp <: Object {
+  type: 'timestamp'
+  subType: 'diary' | active' | 'inactive' | 'active-range' | 'inactive-range'
+  start: Date
+  end: Date?
+  repeater: String?
+  warning: String?
+}
+```
+
+**Timestamp** ([Object](#object)) represents a timestamp.
+
+A `subType` field must be present.
+It represents the seven subtype of the timestamp as followings:
+
+```
+<%%(SEXP)>                                                     (diary)
+<DATE TIME REPEATER-OR-DELAY>                                  (active)
+[DATE TIME REPEATER-OR-DELAY]                                  (inactive)
+<DATE TIME REPEATER-OR-DELAY>--<DATE TIME REPEATER-OR-DELAY>   (active range)
+<DATE TIME-TIME REPEATER-OR-DELAY>                             (active range)
+[DATE TIME REPEATER-OR-DELAY]--[DATE TIME REPEATER-OR-DELAY]   (inactive range)
+[DATE TIME-TIME REPEATER-OR-DELAY]                             (inactive range)
+```
+
+A `start` field must be present.
+It represents the start date of the timestamp.
+
+A `end` field can be present.
+It represents the end date of the timestamp.
+
+A `repeater` field can be present.
+It represents the repeater of the timestamp.
+
+A `warning` field can be present.
+It represents the warning delay of the timestamp.
+
+for example, the following content:
+
+```org
+<1997-11-03 Mon 19:15 +1m -3d>
+```
+
+Yields:
+
+```json
+{
+  "type": "timestamp",
+  "subType": "active",
+  "start": "1997-11-03T19:15:00.000Z",
+  "repeater": "+1m",
+  "warning": "-3d"
+}
+```
+### `Clock`
+### `Diary Sexp`
 ### `Section`
 
 ```idl
@@ -699,47 +797,6 @@ Yields:
 }
 ```
 
-### `Clock`
-### `Diary Sexp`
-### `Planning`
-
-```idl
-interface Planning <: Node {
-  type: 'planning'
-  scheduled: Timestamp?
-  deadline: Timestamp?
-  closed: Timestamp?
-}
-```
-
-**Planning** ([Node](#dfn-node)) represents a planning.
-
-A `scheduled` field can be present.
-It represents the scheduled time of the planning.
-
-A `deadline` field can be present.
-It represents the deadline of the planning.
-
-A `closed` field can be present.
-It represents the closed time of the planning.
-
-for example, the following org:
-
-```org
-    SCHEDULED: <1999-03-31 Wed>
-```
-
-Yields:
-
-```json
-{
-  "type": "planning",
-  "scheduled": {
-    "type": "timestamp",
-    "start": "Wed Mar 31 1999 00:00:00"
-  }
-}
-```
 
 ### `Comment`
 ### `Fixed Width`
@@ -1461,64 +1518,6 @@ Yields:
 ```
 
 
-
-### `Timestamp`
-
-```idl
-interface Timestamp <: Object {
-  type: 'timestamp'
-  subType: 'diary' | active' | 'inactive' | 'active-range' | 'inactive-range'
-  start: Date
-  end: Date?
-  repeater: String?
-  warning: String?
-}
-```
-
-**Timestamp** ([Object](#object)) represents a timestamp.
-
-A `subType` field must be present.
-It represents the seven subtype of the timestamp as followings:
-
-```
-<%%(SEXP)>                                                     (diary)
-<DATE TIME REPEATER-OR-DELAY>                                  (active)
-[DATE TIME REPEATER-OR-DELAY]                                  (inactive)
-<DATE TIME REPEATER-OR-DELAY>--<DATE TIME REPEATER-OR-DELAY>   (active range)
-<DATE TIME-TIME REPEATER-OR-DELAY>                             (active range)
-[DATE TIME REPEATER-OR-DELAY]--[DATE TIME REPEATER-OR-DELAY]   (inactive range)
-[DATE TIME-TIME REPEATER-OR-DELAY]                             (inactive range)
-```
-
-A `start` field must be present.
-It represents the start date of the timestamp.
-
-A `end` field can be present.
-It represents the end date of the timestamp.
-
-A `repeater` field can be present.
-It represents the repeater of the timestamp.
-
-A `warning` field can be present.
-It represents the warning delay of the timestamp.
-
-for example, the following content:
-
-```org
-<1997-11-03 Mon 19:15 +1m -3d>
-```
-
-Yields:
-
-```json
-{
-  "type": "timestamp",
-  "subType": "active",
-  "start": "1997-11-03T19:15:00.000Z",
-  "repeater": "+1m",
-  "warning": "-3d"
-}
-```
 
 ### `Paragraph`
 
