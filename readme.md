@@ -925,7 +925,36 @@ Yields:
 ```
 
 ### `Table Row`
+
 ### `Entity`
+
+```idl
+interface Entity <: Node {
+  type: 'entity'
+  value: string
+}
+```
+
+**Entity** ([Node][dfn-node]) represents an entity described in [Org Entities](https://orgmode.org/worg/org-syntax.html#Entities_List). An entity is an special character that can be translated to a unicode character.
+
+A `value` field must be present.
+It represents the value of the entity
+
+for example, the following content:
+
+```org
+\zeta
+```
+
+Yields:
+
+```json
+{
+  "type": "entity",
+  "value": "ζ"
+}
+```
+
 ### `LaTeX Fragment`
 
 ```idl
