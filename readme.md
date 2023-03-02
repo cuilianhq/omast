@@ -56,7 +56,6 @@ See [releases][] for released documents.
     - [`Entity`](#entity)
     - [`LaTeX Fragment`](#latex-fragment)
     - [`Export Snippet`](#export-snippet)
-    - [`Footnote Reference`](#footnote-reference)
     - [`Citation`](#citation)
     - [`Citation Reference`](#citation-reference)
     - [`Inline BabelCall`](#inline-babelcall)
@@ -67,10 +66,11 @@ See [releases][] for released documents.
       - [`Plain link`](#plain-link)
       - [`Angle Link`](#angle-link)
       - [`Regular Link`](#regular-link)
+    - [`Target`](#target)
+    - [`Radio Target`](#radio-target)
+    - [`Footnote Reference`](#footnote-reference)
     - [`Footnote Definitions`](#footnote-definitions)
     - [Macro](#macro)
-    - [Target](#target)
-    - [`Radio Target`](#radio-target)
     - [`Statistic Cookie`](#statistic-cookie)
     - [`Subscript`](#subscript)
     - [`Superscript`](#superscript)
@@ -1040,7 +1040,7 @@ Yields:
 ```
 
 ### `Export Snippet`
-### `Footnote Reference`
+
 ### `Citation`
 ### `Citation Reference`
 ### `Inline BabelCall`
@@ -1117,7 +1117,6 @@ A `description` field can be present.
 It represents the description of the link.
 
 #### `Radio Link`
-
 #### `Plain link`
 
 ```idl
@@ -1151,7 +1150,6 @@ Yields:
   "path": "orgmode.org"
 }
 ```
-
 #### `Angle Link`
 
 ```idl
@@ -1185,7 +1183,6 @@ Yields:
   "path": "example.com"
 }
 ```
-
 #### `Regular Link`
 
 ```idl
@@ -1264,9 +1261,7 @@ Yields:
   "path": "1234"
 }
 ```
-### `Footnote Definitions`
-### Macro
-### Target
+### `Target`
 
 ``` idl
 interface Target <: Node {
@@ -1297,7 +1292,6 @@ Yields:
   }
 }
 ```
-
 ### `Radio Target`
 
 ```idl
@@ -1338,6 +1332,10 @@ Yields:
   }
 }
 ```
+### `Footnote Reference`
+### `Footnote Definitions`
+
+### Macro
 
 ### `Statistic Cookie`
 
