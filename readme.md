@@ -554,19 +554,23 @@ interface Link <: Object {
   type: 'link'
   subType: 'regular' | 'radio' | 'angle' | 'plain'
   rawLink: string
-  description: string
+  description?: string
 }
+
+Link includes AffiliatedKeyword
 ```
 
-Links are syntactic components that exist with a smaller scope than a paragraph, and so can be contained within a paragraph.
+**Link** represents a hyperlink.
 
-`subType` must be present.
+**Link** includes mixins **Affiliated Keyword** ([Affiliated Keyword](#affiliated-keyword)).
+
+A `subType` field must be present.
 It represents the subtype of the link. There are four subtypes, which are: `regular`, `radio`, `angle`, and `plain`.
 
-`rawLink` must be present.
+A `rawLink` field must be present.
 It represents the raw link string, which is the link string before any processing.
 
-`description` can be present.
+A `description` field can be present.
 It represents the description of the link.
 
 #### `Radio Link`
@@ -582,9 +586,11 @@ interface PlainLink <: Link {
 PlainLink includes Resource
 ```
 
-**Plain Link** includes **Resource** ([Resource](#resource)).
+**Plain Link** ([Link](#link)) represents plain-type links are links that are not surrounded by angle brackets.
 
-for example, the following orgmode:
+**Plain Link** includes mixins **Resource** ([Resource](#resource)).
+
+for example, the following content:
 
 ```org
 https://orgmode.org.
@@ -592,14 +598,14 @@ https://orgmode.org.
 
 Yields:
 
-```js
+```json
 {
-  type: 'link',
-  subType: 'plain',
-  rawLink: 'https://orgmode.org',
-  resourceType: 'protocol',
-  protocol: 'https',
-  path: 'orgmode.org'
+  "type": "link",
+  "subType": "plain",
+  "rawLink": "https://orgmode.org",
+  "resourceType": "protocol",
+  "protocol": "https",
+  "path": "orgmode.org"
 }
 ```
 
@@ -614,9 +620,11 @@ interface AngleLink <: Link {
 AngleLink includes Resource
 ```
 
-Angle-type essentially provide a method to disambiguate plain links from surrounding text.
+**Angle Link** ([Link](#link)) represents angle-type links are links that are surrounded by angle brackets.
 
-for example, the following orgmode:
+**Angle Link** includes mixins **Resource** ([Resource](#resource)).
+
+for example, the following content:
 
 ```org
 <https:example.com>
@@ -624,14 +632,14 @@ for example, the following orgmode:
 
 Yields:
 
-```js
+```json
 {
-  type: 'link',
-  subType: 'angle',
-  rawLink: 'https:example.com',
-  resourceType: 'protocol',
-  protocol: 'https',
-  path: 'example.com'
+  "type": "link",
+  "subType": "angle",
+  "rawLink": "https:example.com",
+  "resourceType": "protocol",
+  "protocol": "https",
+  "path": "example.com"
 }
 ```
 
@@ -645,31 +653,40 @@ interface RegularLink <: Link {
 RegularLink includes Resource
 ```
 
-**Regular links** are the most common type of link, and structured according to one of the following two patterns:
+**Regular links**([Link](#link)) represents the most common type of link, and structured according to one of the following two patterns:
 [[PATHREG]] or [[PATHREG][DESCRIPTION]].
 
 **Regular links** includes [Resource](#resource).
 
-for example, the following orgmode:
+for example, the following content:
 
 ```org
+#+ATTR_HTML: :title The Org mode website :style color:red;
 [[https://example.com][Example]]
 ```
 
 Yields:
 
-```js
+```json
 {
-  type: 'link',
-  subType: 'regular',
-  rawLink: 'https://example.com',
-  type: 'protocol',
-  protocol: 'https',
-  path: 'example.com',
-  description: 'Example'
+  "type": "link",
+  "subType": "regular",
+  "rawLink": "https://example.com",
+  "resourceType": "protocol",
+  "protocol": "https",
+  "path": "example.com",
+  "description": "Example"
+  "affiliated": [
+    {
+      "type": "affiliated-keyword",
+      "backend": "html",
+      "value": ":title The Org mode website :style color:red;"
+    }
+  ]
 }
 ```
-and the following orgmode:
+
+and the following content:
 
 ```org
 [[a.png]]
@@ -677,17 +694,17 @@ and the following orgmode:
 
 Yields:
 
-```js
+```json
 {
-  type: 'link',
-  subType: 'regular',
-  rawLink: 'a.png',
-  resourceType: 'file',
-  filename: 'a.png'
+  "type": "link",
+  "subType": "regular",
+  "rawLink": "a.png",
+  "resourceType": "file",
+  "path": "a.png"
 }
 ```
 
-and the following orgmode:
+and the following content:
 
 ```org
 [[id:1234]]
@@ -695,13 +712,13 @@ and the following orgmode:
 
 Yields:
 
-```js
+```json
 {
-  type: 'link',
-  subType: 'regular',
-  rawLink: 'id:1234',
-  resourceType: 'id',
-  id: '1234'
+  "type": "link",
+  "subType": "regular",
+  "rawLink": "id:1234",
+  "resourceType": "id",
+  "path": "1234"
 }
 ```
 
