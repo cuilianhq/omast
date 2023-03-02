@@ -85,6 +85,7 @@ See [releases][] for released documents.
       - [Custom ID](#custom-id)
       - [Code Ref](#code-ref)
       - [Fuzzy](#fuzzy)
+    - [`Affiliated Keywords`](#affiliated-keywords)
   - [Glossary](#glossary)
   - [References](#references)
   - [Related](#related)
@@ -457,6 +458,83 @@ Yields:
 
 ### `Babel Call`
 ### `Affiliated Keyword`
+
+```idl
+interface AffiliatedKeyword <: Object {
+  type: 'affiliated-keyword'
+  key: string?
+  value: string?
+  backend: string?
+  options: string?
+}
+```
+
+**Affiliated Keyword** represents an affiliated keyword.
+It has three variants: `#+KEY: VALUE`, `#+KEY[OPTVAL]: VALUE `, and `#+attr_BACKEND: VALUE`.
+
+A `key` field can be present.
+It represents the key of the affiliated keyword.
+
+If `key` field is present, an `options` field can be present.
+It represents the options of the affiliated keyword.
+
+A `backend` field can be present.
+It represents the attributes the export backend used.
+
+Either `key` or `backend` field must be present.
+
+A `value` field must be present.
+It represents the value of the affiliated keyword.
+
+for example, the following org:
+
+```org
+#+name: image-name
+```
+
+Yields:
+
+```json
+{
+  "type": "affiliated-keyword",
+  "key": "name",
+  "value": "image-name"
+}
+```
+
+and the following org:
+
+```org
+#+name[options]: image-name
+```
+
+Yields:
+
+```json
+{
+  "type": "affiliated-keyword",
+  "key": "name",
+  "options": "options",
+  "value": "image-name"
+}
+```
+
+and the following org:
+
+```org
+#+attr_html: :width 100px
+```
+
+Yields:
+
+```json
+{
+  "type": "affiliated-keyword",
+  "backend": "html",
+  "value": ":width 100px"
+}
+```
+
 ### `LaTeX Environment`
 ### `Node Property`
 ### `Table Row`
@@ -819,6 +897,52 @@ interface Fuzzy <: Resource {
 
 A `fuzzy` field must be present.
 It represents the fuzzy path of the link.
+
+### `Affiliated Keywords`
+
+```idl
+interface mixin AffiliatedKeywords {
+  afflicated: [AffiliatedKeyword?]
+}
+```
+
+**Affiliated Keywords** represents a list of [Affiliated Keyword](#affiliated-keyword) objects that attached to an [Element](#element).
+
+A `affiliated` field can be present.
+It represents a list of [Affiliated Keyword](#affiliated-keyword) objects.
+
+for example, the following orgmode documents a link with affiliated keywords:
+
+```org
+#+name: image-name
+#+caption: This is a caption for
+#+caption: the image linked below
+[[file:some/image.png]]
+```
+
+Yields:
+
+```json
+{
+  "type": "link",
+  "subType": "regular",
+  "resourceType": "protocol",
+  "rawLink": "file:some/image.png",
+  "path": "some/image.png",
+  "affiliated": [
+    {
+      "type": "affiliated-keyword",
+      "key": "name",
+      "value": "image-name"
+    },
+    {
+      "type": "affiliated-keyword",
+      "key": "caption",
+      "value": "This is a caption for the image linked below"
+    }
+  ]
+}
+```
 
 ## Glossary
 
