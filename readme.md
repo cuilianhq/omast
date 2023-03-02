@@ -618,13 +618,13 @@ Yields:
 ### `Verse Block`
 
 ```idl
-interface VerseBlock <: LesserElement {
-  type: 'verseBlock'
+interface VerseBlock <: Node {
+  type: 'verse-block'
   value: string?
 }
 ```
 
-**Verse Block** represents a block of text that is a verse. It is not subject to markup and reserve indents.
+**Verse Block** ([Node][dfn-node]) represents a block of text that is a verse. It is not subject to markup and reserve indents.
 
 for example, the following org:
 
@@ -639,7 +639,7 @@ Yields:
 
 ```json
 {
-  "type": "verseBlock",
+  "type": "verse-block",
   "value": "   first line\nsecond line"
 }
 ```
