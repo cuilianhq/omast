@@ -30,7 +30,6 @@ See [releases][] for released documents.
     - [`Drawer`](#drawer)
     - [`Property Drawer`](#property-drawer)
     - [`Node Property`](#node-property)
-    - [`Footnote Definitions`](#footnote-definitions)
     - [`Inline Task`](#inline-task)
     - [`List Item`](#list-item)
     - [`Plain List`](#plain-list)
@@ -68,6 +67,7 @@ See [releases][] for released documents.
       - [`Plain link`](#plain-link)
       - [`Angle Link`](#angle-link)
       - [`Regular Link`](#regular-link)
+    - [`Footnote Definitions`](#footnote-definitions)
     - [Macro](#macro)
     - [Target](#target)
     - [`Radio Target`](#radio-target)
@@ -445,7 +445,7 @@ Yields:
 }
 ```
 
-### `Footnote Definitions`
+
 ### `Inline Task`
 ### `List Item`
 ### `Plain List`
@@ -1264,7 +1264,7 @@ Yields:
   "path": "1234"
 }
 ```
-
+### `Footnote Definitions`
 ### Macro
 ### Target
 
