@@ -69,6 +69,7 @@ See [releases][] for released documents.
       - [`Regular Link`](#regular-link)
     - [Macro](#macro)
     - [Target](#target)
+    - [`Radio Target`](#radio-target)
     - [`Statistic Cookie`](#statistic-cookie)
     - [`Subscript`](#subscript)
     - [`Superscript`](#superscript)
@@ -1085,6 +1086,77 @@ Yields:
 
 ### Macro
 ### Target
+
+``` idl
+interface Target <: Node {
+  type: 'target'
+  value: Text
+}
+```
+
+**Target** ([Node][dfn-node]) represents a target that a [**Regular Link**](#regular-link) links to. It is usually used to link to a specific location in the document as an internal link.
+
+A `value` field must be present.
+It represents the value of the target
+
+for example, the following content:
+
+```org
+<<important>>
+```
+
+Yields:
+
+```json
+{
+  "type": "target",
+  "value": {
+    "type": "text",
+    "value": "important"
+  }
+}
+```
+
+### `Radio Target`
+
+```idl
+Interface RadioTarget <: Target {
+  type: 'radio-target'
+  value: MinimalSetObject
+}
+```
+
+**Radio Target** ([Node][dfn-node]) represents a radio target that a [**Radio Link**](#radio-link) links to.
+
+A `value` field must be present.
+It represents the value of the target.
+
+for example, the following content:
+
+```org
+<<<*important* information>>>
+```
+
+Yields:
+
+```json
+{
+  "type": "radio-target",
+  "value": {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "bold",
+          "value": "important"
+        },
+        {
+          "type": "text",
+          "value": "information"
+        }
+      ]
+  }
+}
+```
 
 ### `Statistic Cookie`
 
