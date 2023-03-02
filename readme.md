@@ -710,6 +710,38 @@ Yields:
 
 ### `Comment`
 ### `Fixed Width`
+
+```idl
+interface FixedWidth <: Node {
+  type: 'fixed-width'
+  value: string
+}
+
+FixedWidth includes AffiliatedKeywords
+```
+
+**Fixed Width** ([Node](#dfn-node)) represents a fixed width area.
+
+**Fixed Width** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+
+A `value` field must be present.
+
+for example, the following org:
+
+```org
+: This is a
+: fixed width area
+```
+
+Yields:
+
+```json
+{
+  "type": "fixed-width",
+  "value": "This is a\nfixed width area"
+}
+```
+
 ### `Horizontal Rule`
 
 ```idl
