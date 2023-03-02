@@ -927,6 +927,60 @@ Yields:
 ### `Table Row`
 ### `Entity`
 ### `LaTeX Fragment`
+
+```idl
+interface LaTeXFragment <: Node {
+  type: 'latex-fragment'
+  name?: string
+  value: string
+}
+```
+
+**LaTeX Fragment** ([Node](#dfn-node)) represents a LaTeX fragment.
+
+A `name` field can be present.
+It represents the name of the LaTeX fragment.
+
+A `value` field must be present.
+It represents the contents of the LaTeX fragment.
+
+for example, the following content:
+
+```org
+\enlargethispage{2\baselineskip}
+\(e^{i \pi}\)
+```
+
+Yields:
+
+```json
+{
+  "type": "latex-fragment",
+  "name": "enlargethispage",
+  "value": "2\\baselineskip"
+},
+{
+  "type": "latex-fragment",
+  "name": "display",
+  "value": "e^{i \\pi}"
+}
+```
+
+and the following content:
+
+```org
+$$1+1=2$$
+```
+
+Yields:
+
+```json
+{
+  "type": "latex-fragment",
+  "value": "1+1=2"
+}
+```
+
 ### `Export Snippet`
 ### `Footnote Reference`
 ### `Citation`
