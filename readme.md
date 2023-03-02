@@ -184,6 +184,78 @@ interface Object <: Node {
 Objects are syntactic components that exist with a smaller scope than a paragraph, and so can be contained within a paragraph.
 
 ### `Heading`
+
+```interface Heading <: Element {
+  type: 'heading'
+  depth: number
+  title: Paragraph | Link
+  commented: bool
+  keyword?: string
+  priority?: string
+  tags?: [string]
+  children: [Section?]
+}
+```
+
+**Heading** ([Parent](#parent)) represents a heading of a section.
+
+A `depth` field must be present.
+It represents the depth of the heading. the value of `depth` must greater than 0.
+
+A `commented` field must be present.
+It represents whether the heading is commented or not.
+
+A `title` field must be present.
+It represents the title of the heading.
+
+A `keyword` field can be present.
+It represents the *todo keyword* of the heading.
+
+A `priority` field can be present.
+It represents the priority of the heading.
+
+A `tags` field can be present.
+It represents the tags of the heading.
+
+A `children` field must be present.
+It represents the sections the heading contained. A heading may have no section.
+
+for  example, the following content:
+
+```org
+* TODO [#A] Heading :tag1:tag2:
+This is a paragraph
+```
+
+Yields:
+
+```json
+{
+  "type": "heading",
+  "depth": 1,
+  "commented": false,
+  "keyword": "TODO",
+  "priority": "A",
+  "tags": ["tag1", "tag2"],
+  "title": {
+    "type":"paragraph",
+    "children": {
+      "type":"text",
+      "value":"Heading"
+    },
+  "children": [{
+    "type": "section",
+    "children": [{
+      "type": "paragraph",
+      "children": [{
+        "type": "text",
+        "value": "This is a paragraph"
+      }]
+    }]
+  }]
+}
+```
+
 ### `Section`
 ### `Center Block`
 
