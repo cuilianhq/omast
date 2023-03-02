@@ -60,13 +60,9 @@ See [releases][] for released documents.
     - [`Comment`](#comment)
     - [`Fixed Width`](#fixed-width)
     - [`Keyword`](#keyword)
-    - [`Babel Call`](#babel-call)
     - [`Affiliated Keyword`](#affiliated-keyword)
-    - [`Export Snippet`](#export-snippet)
     - [`Citation`](#citation)
     - [`Citation Reference`](#citation-reference)
-    - [`Inline BabelCall`](#inline-babelcall)
-    - [`Inline SrcBlock`](#inline-srcblock)
     - [`Link`](#link)
       - [`Radio Link`](#radio-link)
       - [`Plain link`](#plain-link)
@@ -76,7 +72,11 @@ See [releases][] for released documents.
     - [`Radio Target`](#radio-target)
     - [`Footnote Reference`](#footnote-reference)
     - [`Footnote Definitions`](#footnote-definitions)
-    - [Macro](#macro)
+    - [`Macro`](#macro)
+    - [`Export Snippet`](#export-snippet)
+    - [`Babel Call`](#babel-call)
+    - [`Inline BabelCall`](#inline-babelcall)
+    - [`Inline SrcBlock`](#inline-srcblock)
     - [`Statistic Cookie`](#statistic-cookie)
   - [`Mixin`](#mixin)
     - [`Resource`](#resource)
@@ -1215,7 +1215,7 @@ Yields:
 }
 ```
 
-### `Babel Call`
+
 ### `Affiliated Keyword`
 
 ```idl
@@ -1295,12 +1295,10 @@ Yields:
 ```
 
 
-### `Export Snippet`
+
 
 ### `Citation`
 ### `Citation Reference`
-### `Inline BabelCall`
-### `Inline SrcBlock`
 
 ### `Link`
 
@@ -1546,9 +1544,11 @@ Yields:
 ```
 ### `Footnote Reference`
 ### `Footnote Definitions`
-
-### Macro
-
+### `Macro`
+### `Export Snippet`
+### `Babel Call`
+### `Inline BabelCall`
+### `Inline SrcBlock`
 ### `Statistic Cookie`
 
 ```idl
