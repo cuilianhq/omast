@@ -70,8 +70,8 @@ See [releases][] for released documents.
     - [Macro](#macro)
     - [Target](#target)
     - [Statistic Cookie](#statistic-cookie)
-    - [Subscript](#subscript)
-    - [Superscript](#superscript)
+    - [`Subscript`](#subscript)
+    - [`Superscript`](#superscript)
     - [Table Cell](#table-cell)
     - [Timestamp](#timestamp)
     - [`Paragraph`](#paragraph)
@@ -233,7 +233,92 @@ Yields:
 }
 ```
 ### `Drawer`
+
+```idl
+interface Drawer <: GreaterElement {
+  type: 'drawer'
+  name: string
+  children: [GreaterElementContent]
+}
+```
+
+**Drawer** represents a drawer that contains arbitrary content associated with an entry.
+
+A `name` field must be present.
+It represents the name of the drawer.
+
+A `children` field can not contain any other [Drawer](#drawer) and [Heading](#heading).
+
+for example, the following org:
+
+```org
+:DRAWERNAME:
+This is inside the drawer.
+:END:
+```
+
+Yields:
+
+```json
+{
+  "type": "drawer",
+  "name": "DRAWERNAME",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "This is inside the drawer."
+        }
+      ]
+    }
+  ]
+}
+```
+
 ### `Property Drawer`
+
+```idl
+interface PropertyDrawer <: Drawer {
+  type: 'property-drawer'
+  children: [NodeProperty?]
+}
+```
+
+**Property Drawer** ([Drawer](#drawer)) represents a drawer that contains properties attached to a [Heading](#heading) or [Inline Task](#inline-task) or a special [Section](#section) called zero section.
+
+A `children` field must be present and can only contain [Node Property](#node-property).
+
+for example, the following content:
+
+```org
+:PROPERTIES:
+:ID:       0a1b2c3d
+:YEAR:      2013
+```
+
+Yields:
+
+```json
+{
+  "type": "property-drawer",
+  "name": "PROPERTIES",
+  "children": [
+    {
+      "type": "node-property",
+      "name": "ID",
+      "value": "0a1b2c3d"
+    },
+    {
+      "type": "node-property",
+      "name": "YEAR",
+      "value": "2013"
+    }
+  ]
+}
+```
+
 ### `Dynamic Block`
 ### `Footnote Definitions`
 ### `Inline Task`
@@ -537,6 +622,39 @@ Yields:
 
 ### `LaTeX Environment`
 ### `Node Property`
+
+```idl
+interface NodeProperty <: Object {
+  type: 'node-property'
+  name: string
+  value?: string
+}
+```
+
+**Node Property** ([Lesser Element](#lesser-element)) represents a node property and can only exists in [Property Drawer](#property-drawer).
+
+A `name` field must be present.
+It represents the name of the node property.
+
+A `value` field can be present.
+It represents the value of the node property.
+
+for example, the following org:
+
+```org
+:LOCATION: Beijing
+```
+
+Yields:
+
+```json
+{
+  "type": "node-property",
+  "name": "LOCATION",
+  "value": "Beijing"
+}
+```
+
 ### `Table Row`
 ### `Entity`
 ### `LaTeX Fragment`
@@ -725,8 +843,80 @@ Yields:
 ### Macro
 ### Target
 ### Statistic Cookie
-### Subscript
-### Superscript
+### `Subscript`
+
+```idl
+interface Subscript <: Object {
+  type: 'subscript'
+  value: Text
+}
+```
+
+**Subscript** ([Object](#object)) represents a subscript.
+
+for example, the following content, x<sub>y</sub>:
+
+```org
+x_y
+```
+
+Yields:
+
+```json
+{
+  "type": "paragraph",
+  "children": [
+    {
+      "type": "text",
+      "value": "x"
+    },
+    {
+      "type": "subscript",
+      "value": {
+        "type": "text", "value": "y"
+        }
+    }
+  ]
+}
+```
+
+### `Superscript`
+
+```idl
+interface Superscript <: Object {
+  type: 'superscript'
+  value: Text
+}
+```
+
+**Superscript** ([Object](#object)) represents a superscript.
+
+for example, the following content, x<sup>y</sup>:
+
+```org
+x^y
+```
+
+Yields:
+
+```json
+{
+  "type": "paragraph",
+  "children": [
+    {
+      "type": "text",
+      "value": "x"
+    },
+    {
+      "type": "superscript",
+      "value": {
+        "type": "text", "value": "y"
+        }
+    }
+  ]
+}
+```
+
 ### Table Cell
 ### Timestamp
 ### `Paragraph`
