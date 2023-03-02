@@ -34,6 +34,16 @@ See [releases][] for released documents.
     - [`Drawer`](#drawer)
     - [`Property Drawer`](#property-drawer)
     - [`Node Property`](#node-property)
+    - [`Paragraph`](#paragraph)
+    - [`Line Break`](#line-break)
+    - [`Horizontal Rule`](#horizontal-rule)
+    - [`Text`](#text)
+    - [`Text Markup`](#text-markup)
+    - [`Subscript`](#subscript)
+    - [`Superscript`](#superscript)
+    - [`LaTeX Environment`](#latex-environment)
+    - [`LaTeX Fragment`](#latex-fragment)
+    - [`Entity`](#entity)
     - [`Inline Task`](#inline-task)
     - [`List Item`](#list-item)
     - [`Plain List`](#plain-list)
@@ -49,19 +59,14 @@ See [releases][] for released documents.
     - [`Verse Block`](#verse-block)
     - [`Comment`](#comment)
     - [`Fixed Width`](#fixed-width)
-    - [`Horizontal Rule`](#horizontal-rule)
     - [`Keyword`](#keyword)
     - [`Babel Call`](#babel-call)
     - [`Affiliated Keyword`](#affiliated-keyword)
-    - [`LaTeX Environment`](#latex-environment)
-    - [`Entity`](#entity)
-    - [`LaTeX Fragment`](#latex-fragment)
     - [`Export Snippet`](#export-snippet)
     - [`Citation`](#citation)
     - [`Citation Reference`](#citation-reference)
     - [`Inline BabelCall`](#inline-babelcall)
     - [`Inline SrcBlock`](#inline-srcblock)
-    - [`Line Break`](#line-break)
     - [`Link`](#link)
       - [`Radio Link`](#radio-link)
       - [`Plain link`](#plain-link)
@@ -73,11 +78,6 @@ See [releases][] for released documents.
     - [`Footnote Definitions`](#footnote-definitions)
     - [Macro](#macro)
     - [`Statistic Cookie`](#statistic-cookie)
-    - [`Subscript`](#subscript)
-    - [`Superscript`](#superscript)
-    - [`Paragraph`](#paragraph)
-    - [`Text`](#text)
-    - [`Text Markup`](#text-markup)
   - [`Mixin`](#mixin)
     - [`Resource`](#resource)
       - [File](#file)
@@ -543,7 +543,357 @@ Yields:
 }
 ```
 
+### `Paragraph`
 
+```idl
+interface Paragraph <: Parent {
+  type: 'paragraph'
+  children: [Object]
+}
+```
+
+Paragraphs are the default element, which means that any unrecognized context is a paragraph.
+
+Paragraphs can contain the standard set of objects.
+
+For example, the following orgmode:
+
+```org
+Alpha bravo charlie.
+```
+
+yields:
+
+```js
+{
+  type: 'paragraph',
+  children: [
+    {type: 'text', value: 'Alpha bravo charlie.'}
+  ]
+}
+```
+### `Line Break`
+
+```idl
+interface LineBreak <: Node {
+  type: 'line-break'
+}
+```
+
+**Line Break** ([Node][dfn-node]) represents a line break, such as in [Quote Block](#quote-block) and [Paragraph](#paragraph).
+
+for example, the following content:
+
+```org
+#+BEGIN_QUOTE
+a1 \\
+a2
+#+END_QUOTE
+```
+
+Yields:
+
+```json
+{
+  "type": "quote-block",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "a1"
+        },
+        {
+          "type": "line-break"
+        },
+        {
+          "type": "text",
+          "value": "a2"
+        }
+      ]
+    }
+  ]
+}
+```
+### `Horizontal Rule`
+
+```idl
+interface HorizontalRule <: Node {
+  type: 'horizontal-rule'
+}
+
+HorizontalRule includes AffiliatedKeywords
+```
+
+**Horizontal Rule** ([Node](#dfn-node)) represents a horizontal rule.
+
+for example, the following content:
+
+```org
+-----
+```
+
+Yields:
+
+```json
+{
+  "type": "horizontal-rule"
+}
+```
+### `Text`
+
+Any string that doesn’t match any other object can be considered a plain text object.
+
+```idl
+interface Text <: Literal {
+  type: 'text'
+}
+```
+
+For example, the following orgmode:
+
+```org
+Alpha bravo charlie.
+```
+
+Yields:
+
+```js
+{type: 'text', value: 'Alpha bravo charlie.'}
+```
+### `Text Markup`
+
+```
+interface TextMarkup <: Literal {
+  type: 'bold' | 'italic' | 'underline' | 'verbatim' | 'code' | 'strike-through'
+}
+```
+
+[Text](#Text) can be emphasized. There are six text markup objects to emphasis a text as follows:
+
+- *, a bold object,
+- /, an italic object,
+- _ an underline object,
+- =, a verbatim object,
+- ~, a code object
+- +, a strike-through object.
+
+For example, the following markdown:
+
+```org
+*alpha*, /italic/
+```
+
+Yields:
+
+```js
+{
+  type: 'paragraph',
+  children: [
+    {
+      type: 'bold', value: 'alpha'
+    },
+    {
+      type:'text',
+      value:','}
+    {
+      type: 'italic', value: 'bravo'
+    }
+  ]
+}
+```
+
+Text markup can not contain another text markup.
+### `Subscript`
+
+```idl
+interface Subscript <: Object {
+  type: 'subscript'
+  value: string
+}
+```
+
+**Subscript** ([Object](#object)) represents a subscript.
+
+for example, the following content, x<sub>y</sub>:
+
+```org
+x_y
+```
+
+Yields:
+
+```json
+{
+  "type": "paragraph",
+  "children": [
+    {
+      "type": "text",
+      "value": "x"
+    },
+    {
+      "type": "subscript",
+      "value": "y"
+    }
+  ]
+}
+```
+### `Superscript`
+
+```idl
+interface Superscript <: Object {
+  type: 'superscript'
+  value: string
+}
+```
+
+**Superscript** ([Object](#object)) represents a superscript.
+
+for example, the following content, x<sup>y</sup>:
+
+```org
+x^y
+```
+
+Yields:
+
+```json
+{
+  "type": "paragraph",
+  "children": [
+    {
+      "type": "text",
+      "value": "x"
+    },
+    {
+      "type": "superscript",
+      "value": "y"
+    }
+  ]
+}
+```
+### `LaTeX Environment`
+
+```idl
+interface LaTeXEnvironment <: Node {
+  type: 'latex-environment'
+  name: string
+  value: string
+}
+
+LaTeXEnvironment includes AffiliatedKeywords
+```
+
+**LaTeX Environment** ([Node][dfn-node]) represents a LaTeX environment.
+
+**LaTeX Environment** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+
+A `name` field must be present.
+It represents the name of the LaTeX environment.
+
+A `value` field must be present.
+It represents the contents of the LaTeX environment.
+
+for example, the following org:
+
+```org
+\begin{align*}
+2x - 5y &= 8 \\
+3x + 9y &= -12
+\end{align*}
+```
+
+Yields:
+
+```json
+{
+  "type": "latex-environment",
+  "name": "align*",
+  "value": "2x - 5y &= 8 \\\\\n3x + 9y &= -12"
+}
+```
+### `LaTeX Fragment`
+
+```idl
+interface LaTeXFragment <: Node {
+  type: 'latex-fragment'
+  name?: string
+  value: string
+}
+```
+
+**LaTeX Fragment** ([Node](#dfn-node)) represents a LaTeX fragment.
+
+A `name` field can be present.
+It represents the name of the LaTeX fragment.
+
+A `value` field must be present.
+It represents the contents of the LaTeX fragment.
+
+for example, the following content:
+
+```org
+\enlargethispage{2\baselineskip}
+\(e^{i \pi}\)
+```
+
+Yields:
+
+```json
+{
+  "type": "latex-fragment",
+  "name": "enlargethispage",
+  "value": "2\\baselineskip"
+},
+{
+  "type": "latex-fragment",
+  "name": "display",
+  "value": "e^{i \\pi}"
+}
+```
+
+and the following content:
+
+```org
+$$1+1=2$$
+```
+
+Yields:
+
+```json
+{
+  "type": "latex-fragment",
+  "value": "1+1=2"
+}
+```
+### `Entity`
+
+```idl
+interface Entity <: Node {
+  type: 'entity'
+  value: string
+}
+```
+**Entity** ([Node][dfn-node]) represents an entity described in [Org Entities](https://orgmode.org/worg/org-syntax.html#Entities_List). An entity is an special character that can be translated to a unicode character.
+
+A `value` field must be present.
+It represents the value of the entity
+
+for example, the following content:
+
+```org
+\zeta
+```
+
+Yields:
+
+```json
+{
+  "type": "entity",
+  "value": "ζ"
+}
+```
 ### `Inline Task`
 ### `List Item`
 ### `Plain List`
@@ -797,7 +1147,6 @@ Yields:
 }
 ```
 
-
 ### `Comment`
 ### `Fixed Width`
 
@@ -829,32 +1178,6 @@ Yields:
 {
   "type": "fixed-width",
   "value": "This is a\nfixed width area"
-}
-```
-
-### `Horizontal Rule`
-
-```idl
-interface HorizontalRule <: Node {
-  type: 'horizontal-rule'
-}
-
-HorizontalRule includes AffiliatedKeywords
-```
-
-**Horizontal Rule** ([Node](#dfn-node)) represents a horizontal rule.
-
-for example, the following content:
-
-```org
------
-```
-
-Yields:
-
-```json
-{
-  "type": "horizontal-rule"
 }
 ```
 
@@ -971,130 +1294,6 @@ Yields:
 }
 ```
 
-### `LaTeX Environment`
-
-```idl
-interface LaTeXEnvironment <: Node {
-  type: 'latex-environment'
-  name: string
-  value: string
-}
-
-LaTeXEnvironment includes AffiliatedKeywords
-```
-
-**LaTeX Environment** ([Node][dfn-node]) represents a LaTeX environment.
-
-**LaTeX Environment** includes the mixin [Affiliated Keywords](#affiliated-keywords).
-
-A `name` field must be present.
-It represents the name of the LaTeX environment.
-
-A `value` field must be present.
-It represents the contents of the LaTeX environment.
-
-for example, the following org:
-
-```org
-\begin{align*}
-2x - 5y &= 8 \\
-3x + 9y &= -12
-\end{align*}
-```
-
-Yields:
-
-```json
-{
-  "type": "latex-environment",
-  "name": "align*",
-  "value": "2x - 5y &= 8 \\\\\n3x + 9y &= -12"
-}
-```
-
-### `Entity`
-
-```idl
-interface Entity <: Node {
-  type: 'entity'
-  value: string
-}
-```
-
-**Entity** ([Node][dfn-node]) represents an entity described in [Org Entities](https://orgmode.org/worg/org-syntax.html#Entities_List). An entity is an special character that can be translated to a unicode character.
-
-A `value` field must be present.
-It represents the value of the entity
-
-for example, the following content:
-
-```org
-\zeta
-```
-
-Yields:
-
-```json
-{
-  "type": "entity",
-  "value": "ζ"
-}
-```
-
-### `LaTeX Fragment`
-
-```idl
-interface LaTeXFragment <: Node {
-  type: 'latex-fragment'
-  name?: string
-  value: string
-}
-```
-
-**LaTeX Fragment** ([Node](#dfn-node)) represents a LaTeX fragment.
-
-A `name` field can be present.
-It represents the name of the LaTeX fragment.
-
-A `value` field must be present.
-It represents the contents of the LaTeX fragment.
-
-for example, the following content:
-
-```org
-\enlargethispage{2\baselineskip}
-\(e^{i \pi}\)
-```
-
-Yields:
-
-```json
-{
-  "type": "latex-fragment",
-  "name": "enlargethispage",
-  "value": "2\\baselineskip"
-},
-{
-  "type": "latex-fragment",
-  "name": "display",
-  "value": "e^{i \\pi}"
-}
-```
-
-and the following content:
-
-```org
-$$1+1=2$$
-```
-
-Yields:
-
-```json
-{
-  "type": "latex-fragment",
-  "value": "1+1=2"
-}
-```
 
 ### `Export Snippet`
 
@@ -1102,50 +1301,6 @@ Yields:
 ### `Citation Reference`
 ### `Inline BabelCall`
 ### `Inline SrcBlock`
-### `Line Break`
-
-```idl
-interface LineBreak <: Node {
-  type: 'line-break'
-}
-```
-
-**Line Break** ([Node][dfn-node]) represents a line break, such as in [Quote Block](#quote-block) and [Paragraph](#paragraph).
-
-for example, the following content:
-
-```org
-#+BEGIN_QUOTE
-a1 \\
-a2
-#+END_QUOTE
-```
-
-Yields:
-
-```json
-{
-  "type": "quote-block",
-  "children": [
-    {
-      "type": "paragraph",
-      "children": [
-        {
-          "type": "text",
-          "value": "a1"
-        },
-        {
-          "type": "line-break"
-        },
-        {
-          "type": "text",
-          "value": "a2"
-        }
-      ]
-    }
-  ]
-}
-```
 
 ### `Link`
 
@@ -1447,172 +1602,6 @@ Yields:
 }
 ```
 
-### `Subscript`
-
-```idl
-interface Subscript <: Object {
-  type: 'subscript'
-  value: string
-}
-```
-
-**Subscript** ([Object](#object)) represents a subscript.
-
-for example, the following content, x<sub>y</sub>:
-
-```org
-x_y
-```
-
-Yields:
-
-```json
-{
-  "type": "paragraph",
-  "children": [
-    {
-      "type": "text",
-      "value": "x"
-    },
-    {
-      "type": "subscript",
-      "value": "y"
-    }
-  ]
-}
-```
-
-### `Superscript`
-
-```idl
-interface Superscript <: Object {
-  type: 'superscript'
-  value: string
-}
-```
-
-**Superscript** ([Object](#object)) represents a superscript.
-
-for example, the following content, x<sup>y</sup>:
-
-```org
-x^y
-```
-
-Yields:
-
-```json
-{
-  "type": "paragraph",
-  "children": [
-    {
-      "type": "text",
-      "value": "x"
-    },
-    {
-      "type": "superscript",
-      "value": "y"
-    }
-  ]
-}
-```
-
-
-
-### `Paragraph`
-
-```idl
-interface Paragraph <: Parent {
-  type: 'paragraph'
-  children: [Object]
-}
-```
-
-Paragraphs are the default element, which means that any unrecognized context is a paragraph.
-
-Paragraphs can contain the standard set of objects.
-
-For example, the following orgmode:
-
-```org
-Alpha bravo charlie.
-```
-
-yields:
-
-```js
-{
-  type: 'paragraph',
-  children: [
-    {type: 'text', value: 'Alpha bravo charlie.'}
-  ]
-}
-```
-### `Text`
-
-Any string that doesn’t match any other object can be considered a plain text object.
-
-```idl
-interface Text <: Literal {
-  type: 'text'
-}
-```
-
-For example, the following orgmode:
-
-```org
-Alpha bravo charlie.
-```
-
-Yields:
-
-```js
-{type: 'text', value: 'Alpha bravo charlie.'}
-```
-
-### `Text Markup`
-
-```
-interface TextMarkup <: Literal {
-  type: 'bold' | 'italic' | 'underline' | 'verbatim' | 'code' | 'strike-through'
-}
-```
-
-[Text](#Text) can be emphasized. There are six text markup objects to emphasis a text as follows:
-
-- *, a bold object,
-- /, an italic object,
-- _ an underline object,
-- =, a verbatim object,
-- ~, a code object
-- +, a strike-through object.
-
-For example, the following markdown:
-
-```org
-*alpha*, /italic/
-```
-
-Yields:
-
-```js
-{
-  type: 'paragraph',
-  children: [
-    {
-      type: 'bold', value: 'alpha'
-    },
-    {
-      type:'text',
-      value:','}
-    {
-      type: 'italic', value: 'bravo'
-    }
-  ]
-}
-```
-
-Text markup can not contain another text markup.
 
 ## `Mixin`
 
