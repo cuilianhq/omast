@@ -470,9 +470,13 @@ interface CommentBlock <: Parent {
   type: 'commentBlock'
   children: [Paragraph]
 }
+
+CommentBlock includes AffiliatedKeywords
 ```
 
 **Comment Block** ([Parent](#parent)) represents a block of text that is a comment. It can contain markup.
+
+**Comment Block** includes the mixin [Affiliated Keywords](#affiliated-keywords).
 
 for example, the following org:
 
@@ -517,8 +521,13 @@ interface ExampleBlock <: LesserElement {
   type: 'exampleBlock'
   value: string?
 }
+
+ExampleBlock includes AffiliatedKeywords
 ```
+
 *Example Block* represents a block of text that is an example. It is not subject to markup.
+
+**Example Block** includes the mixin [Affiliated Keywords](#affiliated-keywords).
 
 for example, the following org:
 
@@ -546,9 +555,13 @@ interface ExportBlock <: Node {
   backend: string
   value: string?
 }
+
+ExportBlock includes AffiliatedKeywords
 ```
 
 **Export Block** ([Node][dfn-node])) represents a block of text that is exported to a backend.
+
+**Export Block** includes the mixin [Affiliated Keywords](#affiliated-keywords).
 
 A `backend` field must be present.
 It represents the backend that the block is exported to.
@@ -583,9 +596,13 @@ interface SourceBlock <: Node {
   arguments: string
   value: string?
 }
+
+SourceBlock includes AffiliatedKeywords
 ```
 
 **Source Block* ([Node][dfn-node]) represents a block of text that is source code.
+
+**Source Block** includes the mixin [Affiliated Keywords](#affiliated-keywords).
 
 A `language` field must be present.
 It represents the language of computer code being marked up.
@@ -622,9 +639,13 @@ interface VerseBlock <: Node {
   type: 'verse-block'
   value: string?
 }
+
+VerseBlock includes AffiliatedKeywords
 ```
 
 **Verse Block** ([Node][dfn-node]) represents a block of text that is a verse. It is not subject to markup and reserve indents.
+
+**Verse Block** includes the mixin [Affiliated Keywords](#affiliated-keywords).
 
 for example, the following org:
 
