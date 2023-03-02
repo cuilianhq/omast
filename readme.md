@@ -13,66 +13,83 @@ See [releases][] for released documents.
 
 ## Contents
 
-*   [Introduction](#introduction)
-    *   [Where this specification fits](#where-this-specification-fits)
-*   [Nodes](#nodes)
-    *   [`Parent`](#parent)
-    *   [`Literal`](#literal)
-    *   [`Root`](#root)
-    *   [`GreaterElement`](#greaterelement)
-    *   [`LesserElement`](#lesserelement)
-    *   [`Element`](#element)
-    *   [`Object`](#object)
-    *   [`Heading`](#heading)
-    *   [`Section`](#section)
-    *   [`Paragraph`](#paragraph)
-    *   [`Center Block`](#center-block)
-    *   [`Quote Block`](#quote-block)
-    *   [`Drawer`](#drawer)
-    *   [`Property Drawer`](#property-drawer)
-    *   [`Dynamic Block`](#dynamic-block)
-    *   [`Footnote Definitions`](#footnote-definitions)
-    *   [`Inline Task`](#inline-task)
-    *   [`List Item`](#list-item)
-    *   [`Plain List`](#plain-list)
-    *   [`Table`](#table)
-    *   [`Comment Block`](#comment-block)
-    *   [`Example Block`](#example-block)
-    *   [`Export Block`](#export-block)
-    *   [`Soruce Block`](#soruce-block)
-    *   [`Verse Block`](#verse-block)
-    *   [`Clock`](#clock)
-    *   [`Diary Sexp`](#diary-sexp)
-    *   [`Planning`](#planning)
-    *   [`Comment`](#comment)
-    *   [`Fixed Width`](#fixed-width)
-    *   [`Horizontal Rule`](#horizontal-rule)
-    *   [`Keyword`](#keyword)
-    *   [`Babel Call`](#babel-call)
-    *   [`Affiliated Keyword`](#affiliated-keyword)
-    *   [`LaTeX Environment`](#latex-environment)
-    *   [`Node Properties`](#node-properties)
-    *   [`Table Row`](#table-row)
-    *   [`Entity`](#entity)
-    *   [`LaTeX Fragment`](#latex-fragment)
-    *   [`Export Snippet`](#export-snippet)
-    *   [`Footnote Reference`](#footnote-reference)
-    *   [`Citation`](#citation)
-    *   [`Citation Reference`](#citation-reference)
-    *   [`Inline BabelCall`](#inline-babelcall)
-    *   [`Inline Src Block`](#inline-src-block)
-    *   [`Line Break`](#line-break)
-    *   [`Link`](#link)
-    *   [`Text`](#text)
-    *   [`Text Markup`](#text-markup)
-*   [Mixin](#mixin)
-    *   [Resource](#resource)
-*   [Glossary](#glossary)
-*   [References](#references)
-*   [Related](#related)
-*   [Contribute](#contribute)
-*   [Acknowledgments](#acknowledgments)
-*   [License](#license)
+- [omast](#omast)
+  - [Contents](#contents)
+  - [Introduction](#introduction)
+    - [Where this specification fits](#where-this-specification-fits)
+  - [Nodes](#nodes)
+    - [`Parent`](#parent)
+    - [`Literal`](#literal)
+    - [`Root`](#root)
+    - [`Element`](#element)
+    - [`GreaterElement`](#greaterelement)
+    - [`Lesser Element`](#lesser-element)
+    - [`Object`](#object)
+    - [`Heading`](#heading)
+    - [`Section`](#section)
+    - [`Center Block`](#center-block)
+    - [`Drawer`](#drawer)
+    - [`Property Drawer`](#property-drawer)
+    - [`Dynamic Block`](#dynamic-block)
+    - [`Footnote Definitions`](#footnote-definitions)
+    - [`Inline Task`](#inline-task)
+    - [`List Item`](#list-item)
+    - [`Plain List`](#plain-list)
+    - [`Table`](#table)
+    - [`Comment Block`](#comment-block)
+    - [`Example Block`](#example-block)
+    - [`Export Block`](#export-block)
+    - [`Source Block`](#source-block)
+    - [`Verse Block`](#verse-block)
+    - [`Clock`](#clock)
+    - [`Diary Sexp`](#diary-sexp)
+    - [`Planning`](#planning)
+    - [`Comment`](#comment)
+    - [`Fixed Width`](#fixed-width)
+    - [`Horizontal Rule`](#horizontal-rule)
+    - [`Keyword`](#keyword)
+    - [`Babel Call`](#babel-call)
+    - [`Affiliated Keyword`](#affiliated-keyword)
+    - [`LaTeX Environment`](#latex-environment)
+    - [`Node Property`](#node-property)
+    - [`Table Row`](#table-row)
+    - [`Entity`](#entity)
+    - [`LaTeX Fragment`](#latex-fragment)
+    - [`Export Snippet`](#export-snippet)
+    - [`Footnote Reference`](#footnote-reference)
+    - [`Citation`](#citation)
+    - [`Citation Reference`](#citation-reference)
+    - [`Inline BabelCall`](#inline-babelcall)
+    - [`Inline SrcBlock`](#inline-srcblock)
+    - [`Line Break`](#line-break)
+    - [`Link`](#link)
+      - [`Radio Link`](#radio-link)
+      - [`Plain link`](#plain-link)
+      - [`Angle Link`](#angle-link)
+      - [`Regular Link`](#regular-link)
+    - [Macro](#macro)
+    - [Target](#target)
+    - [Statistic Cookie](#statistic-cookie)
+    - [Subscript](#subscript)
+    - [Superscript](#superscript)
+    - [Table Cell](#table-cell)
+    - [Timestamp](#timestamp)
+    - [`Paragraph`](#paragraph)
+    - [`Text`](#text)
+    - [`Text Markup`](#text-markup)
+  - [`Mixin`](#mixin)
+    - [`Resource`](#resource)
+      - [File](#file)
+      - [Protocol](#protocol)
+      - [ID](#id)
+      - [Custom ID](#custom-id)
+      - [Code Ref](#code-ref)
+      - [Fuzzy](#fuzzy)
+  - [Glossary](#glossary)
+  - [References](#references)
+  - [Related](#related)
+  - [Contribute](#contribute)
+  - [License](#license)
 
 ## Introduction
 
@@ -97,7 +114,7 @@ interface Parent <: UnistParent {
 }
 ```
 
-**Parent** ([UnistParent][dfn-unist-parent]) represents an abstract interface in mdast containing other nodes (said to be children).
+**Parent** ([UnistParent][dfn-unist-parent]) represents an abstract interface in omast containing other nodes (said to be children).
 Its content is limited to only either Element or Object.
 
 ### `Literal`
@@ -108,7 +125,7 @@ interface Literal <: UnistLiteral {
 }
 ```
 
-**Literal** ([**UnistLiteral**][dfn-unist-literal]) represents an abstract interface in mdast containing a value.
+**Literal** ([**UnistLiteral**][dfn-unist-literal]) represents an abstract interface in omast containing a value.
 
 Its `value` field is a `string`.
 
@@ -329,7 +346,7 @@ Yields:
   "value": "<html></html>"
 }
 ```
-### `Soruce Block`
+### `Source Block`
 
 ```idl
 interface SourceBlock <: GreaterElement {
@@ -378,7 +395,7 @@ interface VerseBlock <: LesserElement {
 }
 ```
 
-**Verse Block** represents a block of text that is a verse. It is not subject to markup and reserve idents.
+**Verse Block** represents a block of text that is a verse. It is not subject to markup and reserve indents.
 
 for example, the following org:
 
@@ -408,7 +425,7 @@ Yields:
 ### `Babel Call`
 ### `Affiliated Keyword`
 ### `LaTeX Environment`
-### `Node Propertie`
+### `Node Property`
 ### `Table Row`
 ### `Entity`
 ### `LaTeX Fragment`
@@ -454,7 +471,7 @@ interface PlainLink <: Link {
 PlainLink includes Resource
 ```
 
-**Plian Link** includes **Resource** ([Resource](#resource)).
+**Plain Link** includes **Resource** ([Resource](#resource)).
 
 for example, the following orgmode:
 
@@ -537,7 +554,7 @@ Yields:
   rawLink: 'https://example.com',
   type: 'protocol',
   protocol: 'https',
-  pathinner: 'example.com',
+  path: 'example.com',
   description: 'Example'
 }
 ```
@@ -717,7 +734,7 @@ interface Protocol <: Resource {
 ```
 
 A `protocol` field must be present.
-It represents the protocol of the link. The defualt value is one of `shell`, `news`, `mailto`, `https`, `http`, `ftp`, `help`, `file`, and `elisp`.
+It represents the protocol of the link. The default value is one of `shell`, `news`, `mailto`, `https`, `http`, `ftp`, `help`, `file`, and `elisp`.
 
 A `path` field must be present.
 It represents the inner part of the path.
