@@ -541,17 +541,20 @@ Yields:
 ### `Export Block`
 
 ```idl
-interface ExportBlock <: LesserElement {
-  type: 'exportBlock'
+interface ExportBlock <: Node {
+  type: 'export-block'
   backend: string
-  value: string
+  value: string?
 }
 ```
 
-**Export Block** represents a block of text that is exported to a backend.
+**Export Block** ([Node][dfn-node])) represents a block of text that is exported to a backend.
 
 A `backend` field must be present.
 It represents the backend that the block is exported to.
+
+A `value` field must be present.
+It represents the contents of the block.
 
 for example, the following org:
 
@@ -565,11 +568,12 @@ Yields:
 
 ```json
 {
-  "type": "exportBlock",
+  "type": "export-block",
   "backend": "html",
   "value": "<html></html>"
 }
 ```
+
 ### `Source Block`
 
 ```idl
