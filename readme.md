@@ -73,7 +73,7 @@ See [releases][] for released documents.
     - [`Subscript`](#subscript)
     - [`Superscript`](#superscript)
     - [Table Cell](#table-cell)
-    - [Timestamp](#timestamp)
+    - [`Timestamp`](#timestamp)
     - [`Paragraph`](#paragraph)
     - [`Text`](#text)
     - [`Text Markup`](#text-markup)
@@ -1051,7 +1051,65 @@ Yields:
 ```
 
 ### Table Cell
-### Timestamp
+
+### `Timestamp`
+
+```idl
+interface Timestamp <: Object {
+  type: 'timestamp'
+  subType: 'diary' | active' | 'inactive' | 'active-range' | 'inactive-range'
+  start: Date
+  end: Date?
+  repeater: String?
+  warning: String?
+}
+```
+
+**Timestamp** ([Object](#object)) represents a timestamp.
+
+A `subType` field must be present.
+It represents the seven subtype of the timestamp as followings:
+
+```
+<%%(SEXP)>                                                     (diary)
+<DATE TIME REPEATER-OR-DELAY>                                  (active)
+[DATE TIME REPEATER-OR-DELAY]                                  (inactive)
+<DATE TIME REPEATER-OR-DELAY>--<DATE TIME REPEATER-OR-DELAY>   (active range)
+<DATE TIME-TIME REPEATER-OR-DELAY>                             (active range)
+[DATE TIME REPEATER-OR-DELAY]--[DATE TIME REPEATER-OR-DELAY]   (inactive range)
+[DATE TIME-TIME REPEATER-OR-DELAY]                             (inactive range)
+```
+
+A `start` field must be present.
+It represents the start date of the timestamp.
+
+A `end` field can be present.
+It represents the end date of the timestamp.
+
+A `repeater` field can be present.
+It represents the repeater of the timestamp.
+
+A `warning` field can be present.
+It represents the warning delay of the timestamp.
+
+for example, the following content:
+
+```org
+<1997-11-03 Mon 19:15 +1m -3d>
+```
+
+Yields:
+
+```json
+{
+  "type": "timestamp",
+  "subType": "active",
+  "start": "1997-11-03T19:15:00.000Z",
+  "repeater": "+1m",
+  "warning": "-3d"
+}
+```
+
 ### `Paragraph`
 
 ```idl
