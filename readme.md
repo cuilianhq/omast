@@ -577,22 +577,22 @@ Yields:
 ### `Source Block`
 
 ```idl
-interface SourceBlock <: GreaterElement {
-  type: 'sourceBlock'
+interface SourceBlock <: Node {
+  type: 'source-block'
   language: string
   arguments: string
-  contents: string?
+  value: string?
 }
 ```
 
-**Source Block* represents a block of text that is source code.
+**Source Block* ([Node][dfn-node]) represents a block of text that is source code.
 
 A `language` field must be present.
 It represents the language of computer code being marked up.
 
 If `language` field is present, a `arguments` field can be present. It represents the arguments of the interpreter.
 
-A `contents` field can be present.
+A `value` field can be present.
 It represents the contents of the source code.
 
 for example, the following org:
@@ -607,13 +607,14 @@ Yields:
 
 ```json
 {
-  "type": "sourceBlock",
+  "type": "source-block",
   "language": "js",
   "switches": "-n2",
   "arguments": ":var x=1",
-  "contents": "console.log('hello world');"
+  "value": "console.log('hello world');"
 }
 ```
+
 ### `Verse Block`
 
 ```idl
