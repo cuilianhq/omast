@@ -86,6 +86,7 @@ See [releases][] for released documents.
       - [Code Ref](#code-ref)
       - [Fuzzy](#fuzzy)
     - [`Affiliated Keywords`](#affiliated-keywords)
+    - [Planable](#planable)
   - [Glossary](#glossary)
   - [References](#references)
   - [Related](#related)
@@ -195,9 +196,13 @@ Objects are syntactic components that exist with a smaller scope than a paragrap
   tags?: [string]
   children: [Section?]
 }
+
+Heading includes Planable
 ```
 
 **Heading** ([Parent](#parent)) represents a heading of a section.
+
+**Heading** includes the mixin [Planable](#planable).
 
 A `depth` field must be present.
 It represents the depth of the heading. the value of `depth` must greater than 0.
@@ -637,6 +642,45 @@ Yields:
 ### `Clock`
 ### `Diary Sexp`
 ### `Planning`
+
+```idl
+interface Planning <: Node {
+  type: 'planning'
+  scheduled: Timestamp?
+  deadline: Timestamp?
+  closed: Timestamp?
+}
+```
+
+**Planning** ([Node](#dfn-node)) represents a planning.
+
+A `scheduled` field can be present.
+It represents the scheduled time of the planning.
+
+A `deadline` field can be present.
+It represents the deadline of the planning.
+
+A `closed` field can be present.
+It represents the closed time of the planning.
+
+for example, the following org:
+
+```org
+    SCHEDULED: <1999-03-31 Wed>
+```
+
+Yields:
+
+```json
+{
+  "type": "planning",
+  "scheduled": {
+    "type": "timestamp",
+    "start": "Wed Mar 31 1999 00:00:00"
+  }
+}
+```
+
 ### `Comment`
 ### `Fixed Width`
 ### `Horizontal Rule`
@@ -1339,6 +1383,43 @@ Yields:
       "value": "This is a caption for the image linked below"
     }
   ]
+}
+```
+
+### Planable
+
+```idl
+interface mixin Planable {
+  planning?: Planning
+}
+```
+
+**Planable** represents a planning object that attached to an [Element](#element). By default, only [Headline](#headline) is allowed.
+
+for example, the following orgmode documents a headline with a planning:
+
+A `planning` field can be present.
+It represents a [Planning](#planning) object.
+
+```org
+* TODO
+  <Scheduled: 2020-01-01>
+```
+
+Yields:
+
+```json
+{
+  "type": "headline",
+  "level": 1,
+  "todoKeyword": "TODO",
+  "planning": {
+    "type": "planning",
+    "scheduled": {
+      "type": "scheduled",
+      "start": "2020-01-01T00:00:00.000Z"
+    }
+  }
 }
 ```
 
