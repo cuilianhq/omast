@@ -34,6 +34,8 @@ See [releases][] for released documents.
     - [`List Item`](#list-item)
     - [`Plain List`](#plain-list)
     - [`Table`](#table)
+    - [`Table Row`](#table-row)
+    - [`Table Cell`](#table-cell)
     - [`Center Block`](#center-block)
     - [`Dynamic Block`](#dynamic-block)
     - [`Comment Block`](#comment-block)
@@ -52,7 +54,6 @@ See [releases][] for released documents.
     - [`Affiliated Keyword`](#affiliated-keyword)
     - [`LaTeX Environment`](#latex-environment)
     - [`Node Property`](#node-property)
-    - [`Table Row`](#table-row)
     - [`Entity`](#entity)
     - [`LaTeX Fragment`](#latex-fragment)
     - [`Export Snippet`](#export-snippet)
@@ -415,7 +416,8 @@ Yields:
 ### `List Item`
 ### `Plain List`
 ### `Table`
-
+### `Table Row`
+### `Table Cell`
 ### `Center Block`
 
 ```idl
@@ -952,8 +954,6 @@ Yields:
   "value": "Beijing"
 }
 ```
-
-### `Table Row`
 
 ### `Entity`
 
