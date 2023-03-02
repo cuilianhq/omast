@@ -187,7 +187,8 @@ Objects are syntactic components that exist with a smaller scope than a paragrap
 
 ### `Heading`
 
-```interface Heading <: Element {
+```idl
+interface Heading <: Parent {
   type: 'heading'
   depth: number
   title: Paragraph | Link
