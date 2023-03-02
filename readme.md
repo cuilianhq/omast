@@ -61,8 +61,6 @@ See [releases][] for released documents.
     - [`Fixed Width`](#fixed-width)
     - [`Keyword`](#keyword)
     - [`Affiliated Keyword`](#affiliated-keyword)
-    - [`Citation`](#citation)
-    - [`Citation Reference`](#citation-reference)
     - [`Link`](#link)
       - [`Radio Link`](#radio-link)
       - [`Plain link`](#plain-link)
@@ -72,6 +70,8 @@ See [releases][] for released documents.
     - [`Radio Target`](#radio-target)
     - [`Footnote Reference`](#footnote-reference)
     - [`Footnote Definitions`](#footnote-definitions)
+    - [`Citation`](#citation)
+    - [`Citation Reference`](#citation-reference)
     - [`Macro`](#macro)
     - [`Export Snippet`](#export-snippet)
     - [`Babel Call`](#babel-call)
@@ -1293,13 +1293,6 @@ Yields:
   "value": ":width 100px"
 }
 ```
-
-
-
-
-### `Citation`
-### `Citation Reference`
-
 ### `Link`
 
 ```idl
@@ -1544,6 +1537,8 @@ Yields:
 ```
 ### `Footnote Reference`
 ### `Footnote Definitions`
+### `Citation`
+### `Citation Reference`
 ### `Macro`
 ### `Export Snippet`
 ### `Babel Call`
