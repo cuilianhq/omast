@@ -824,6 +824,46 @@ Yields:
 ```
 
 ### `LaTeX Environment`
+
+```idl
+interface LaTeXEnvironment <: Node {
+  type: 'latex-environment'
+  name: string
+  value: string
+}
+
+LaTeXEnvironment includes AffiliatedKeywords
+```
+
+**LaTeX Environment** ([Node][dfn-node]) represents a LaTeX environment.
+
+**LaTeX Environment** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+
+A `name` field must be present.
+It represents the name of the LaTeX environment.
+
+A `value` field must be present.
+It represents the contents of the LaTeX environment.
+
+for example, the following org:
+
+```org
+\begin{align*}
+2x - 5y &= 8 \\
+3x + 9y &= -12
+\end{align*}
+```
+
+Yields:
+
+```json
+{
+  "type": "latex-environment",
+  "name": "align*",
+  "value": "2x - 5y &= 8 \\\\\n3x + 9y &= -12"
+}
+```
+
 ### `Node Property`
 
 ```idl
