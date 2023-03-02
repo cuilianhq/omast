@@ -466,13 +466,13 @@ Yields:
 ### `Comment Block`
 
 ```idl
-interface CommentBlock <: LesserElement {
+interface CommentBlock <: Parent {
   type: 'commentBlock'
   children: [Paragraph]
 }
 ```
 
-**Comment Block** represents a block of text that is a comment. It can contain markup.
+**Comment Block** ([Parent](#parent)) represents a block of text that is a comment. It can contain markup.
 
 for example, the following org:
 
@@ -487,7 +487,7 @@ Yields:
 
 ```json
 {
-  "type": "commentBlock",
+  "type": "comment-block",
   "children": [
     {
       "type": "paragraph",
