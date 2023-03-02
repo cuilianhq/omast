@@ -69,7 +69,7 @@ See [releases][] for released documents.
       - [`Regular Link`](#regular-link)
     - [Macro](#macro)
     - [Target](#target)
-    - [Statistic Cookie](#statistic-cookie)
+    - [`Statistic Cookie`](#statistic-cookie)
     - [`Subscript`](#subscript)
     - [`Superscript`](#superscript)
     - [Table Cell](#table-cell)
@@ -1045,7 +1045,60 @@ Yields:
 
 ### Macro
 ### Target
-### Statistic Cookie
+
+### `Statistic Cookie`
+
+```idl
+interface StatisticCookie <: Object {
+  type: 'statistic-cookie'
+  percentage?: number
+  current?: number
+  total?: number
+}
+```
+
+**Statistic Cookie** ([Object](#object)) represents a statistic cookie in a [Heading](#heading) that usually used to counts any TODO entries or checkbox in the heading's children.
+
+A `percentage` field can be present.
+It represents the percentage. It is a number between 0 and 100.
+
+A `current` field can be present.
+It represents the current number. It is a number greater than 0.
+
+A `total` field can be present.
+It represents the total number. It is a number greater than 0.
+
+for example, the following content:
+
+```org
+[40%]
+```
+
+Yields:
+
+```json
+{
+  "type": "statistic-cookie",
+  "percentage": 40
+}
+```
+
+and the following content:
+
+```org
+[1/2]
+```
+
+Yields:
+
+```json
+{
+  "type": "statistic-cookie",
+  "current": 1,
+  "total": 2
+}
+```
+
 ### `Subscript`
 
 ```idl
