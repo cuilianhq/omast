@@ -59,8 +59,6 @@ See [releases][] for released documents.
     - [`Verse Block`](#verse-block)
     - [`Comment`](#comment)
     - [`Fixed Width`](#fixed-width)
-    - [`Keyword`](#keyword)
-    - [`Affiliated Keyword`](#affiliated-keyword)
     - [`Link`](#link)
       - [`Radio Link`](#radio-link)
       - [`Plain link`](#plain-link)
@@ -78,6 +76,8 @@ See [releases][] for released documents.
     - [`Inline BabelCall`](#inline-babelcall)
     - [`Inline SrcBlock`](#inline-srcblock)
     - [`Statistic Cookie`](#statistic-cookie)
+    - [`Keyword`](#keyword)
+    - [`Affiliated Keyword`](#affiliated-keyword)
   - [`Mixin`](#mixin)
     - [`Resource`](#resource)
       - [File](#file)
@@ -1181,118 +1181,6 @@ Yields:
 }
 ```
 
-### `Keyword`
-
-```idl
-interface Keyword <: Object {
-  type: 'keyword'
-  key: string
-  value: string?
-}
-```
-
-**Keyword** represents a keyword.
-
-A `key` field must be present.
-It represents the key of the keyword.
-
-A `value` field can be present.
-It represents the value of the keyword.
-
-for example, the following org:
-
-```org
-#+TITLE: Hello World
-```
-
-Yields:
-
-```json
-{
-  "type": "keyword",
-  "key": "TITLE",
-  "value": "Hello World"
-}
-```
-
-
-### `Affiliated Keyword`
-
-```idl
-interface AffiliatedKeyword <: Object {
-  type: 'affiliated-keyword'
-  key: string?
-  value: string?
-  backend: string?
-  options: string?
-}
-```
-
-**Affiliated Keyword** represents an affiliated keyword.
-It has three variants: `#+KEY: VALUE`, `#+KEY[OPTVAL]: VALUE `, and `#+attr_BACKEND: VALUE`.
-
-A `key` field can be present.
-It represents the key of the affiliated keyword.
-
-If `key` field is present, an `options` field can be present.
-It represents the options of the affiliated keyword.
-
-A `backend` field can be present.
-It represents the attributes the export backend used.
-
-Either `key` or `backend` field must be present.
-
-A `value` field must be present.
-It represents the value of the affiliated keyword.
-
-for example, the following org:
-
-```org
-#+name: image-name
-```
-
-Yields:
-
-```json
-{
-  "type": "affiliated-keyword",
-  "key": "name",
-  "value": "image-name"
-}
-```
-
-and the following org:
-
-```org
-#+name[options]: image-name
-```
-
-Yields:
-
-```json
-{
-  "type": "affiliated-keyword",
-  "key": "name",
-  "options": "options",
-  "value": "image-name"
-}
-```
-
-and the following org:
-
-```org
-#+attr_html: :width 100px
-```
-
-Yields:
-
-```json
-{
-  "type": "affiliated-keyword",
-  "backend": "html",
-  "value": ":width 100px"
-}
-```
 ### `Link`
 
 ```idl
@@ -1597,6 +1485,119 @@ Yields:
 }
 ```
 
+
+### `Keyword`
+
+```idl
+interface Keyword <: Object {
+  type: 'keyword'
+  key: string
+  value: string?
+}
+```
+
+**Keyword** represents a keyword.
+
+A `key` field must be present.
+It represents the key of the keyword.
+
+A `value` field can be present.
+It represents the value of the keyword.
+
+for example, the following org:
+
+```org
+#+TITLE: Hello World
+```
+
+Yields:
+
+```json
+{
+  "type": "keyword",
+  "key": "TITLE",
+  "value": "Hello World"
+}
+```
+
+
+### `Affiliated Keyword`
+
+```idl
+interface AffiliatedKeyword <: Object {
+  type: 'affiliated-keyword'
+  key: string?
+  value: string?
+  backend: string?
+  options: string?
+}
+```
+
+**Affiliated Keyword** represents an affiliated keyword.
+It has three variants: `#+KEY: VALUE`, `#+KEY[OPTVAL]: VALUE `, and `#+attr_BACKEND: VALUE`.
+
+A `key` field can be present.
+It represents the key of the affiliated keyword.
+
+If `key` field is present, an `options` field can be present.
+It represents the options of the affiliated keyword.
+
+A `backend` field can be present.
+It represents the attributes the export backend used.
+
+Either `key` or `backend` field must be present.
+
+A `value` field must be present.
+It represents the value of the affiliated keyword.
+
+for example, the following org:
+
+```org
+#+name: image-name
+```
+
+Yields:
+
+```json
+{
+  "type": "affiliated-keyword",
+  "key": "name",
+  "value": "image-name"
+}
+```
+
+and the following org:
+
+```org
+#+name[options]: image-name
+```
+
+Yields:
+
+```json
+{
+  "type": "affiliated-keyword",
+  "key": "name",
+  "options": "options",
+  "value": "image-name"
+}
+```
+
+and the following org:
+
+```org
+#+attr_html: :width 100px
+```
+
+Yields:
+
+```json
+{
+  "type": "affiliated-keyword",
+  "backend": "html",
+  "value": ":width 100px"
+}
+```
 
 ## `Mixin`
 
