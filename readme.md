@@ -909,6 +909,50 @@ Yields:
 ### `Inline BabelCall`
 ### `Inline SrcBlock`
 ### `Line Break`
+
+```idl
+interface LineBreak <: Node {
+  type: 'line-break'
+}
+```
+
+**Line Break** ([Node][dfn-node]) represents a line break, such as in [Quote Block](#quote-block) and [Paragraph](#paragraph).
+
+for example, the following content:
+
+```org
+#+BEGIN_QUOTE
+a1 \\
+a2
+#+END_QUOTE
+```
+
+Yields:
+
+```json
+{
+  "type": "quote-block",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "a1"
+        },
+        {
+          "type": "line-break"
+        },
+        {
+          "type": "text",
+          "value": "a2"
+        }
+      ]
+    }
+  ]
+}
+```
+
 ### `Link`
 
 ```idl
