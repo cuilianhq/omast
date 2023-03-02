@@ -27,15 +27,15 @@ See [releases][] for released documents.
     - [`Object`](#object)
     - [`Heading`](#heading)
     - [`Section`](#section)
-    - [`Center Block`](#center-block)
     - [`Drawer`](#drawer)
     - [`Property Drawer`](#property-drawer)
-    - [`Dynamic Block`](#dynamic-block)
     - [`Footnote Definitions`](#footnote-definitions)
     - [`Inline Task`](#inline-task)
     - [`List Item`](#list-item)
     - [`Plain List`](#plain-list)
     - [`Table`](#table)
+    - [`Center Block`](#center-block)
+    - [`Dynamic Block`](#dynamic-block)
     - [`Comment Block`](#comment-block)
     - [`Example Block`](#example-block)
     - [`Export Block`](#export-block)
@@ -73,7 +73,6 @@ See [releases][] for released documents.
     - [`Statistic Cookie`](#statistic-cookie)
     - [`Subscript`](#subscript)
     - [`Superscript`](#superscript)
-    - [Table Cell](#table-cell)
     - [`Timestamp`](#timestamp)
     - [`Paragraph`](#paragraph)
     - [`Text`](#text)
@@ -324,53 +323,6 @@ Yields:
 }
 ```
 
-### `Center Block`
-
-```idl
-interface CenterBlock <: GreaterElement {
-  type: 'centerBlock'
-  children: [GreaterElementContent]
-}
-```
-
-**Center Block** represents a block of text that is centered.
-
-for example, the following org:
-
-```org
-#+BEGIN_CENTER
-first line
-second line
-#+END_CENTER
-```
-
-Yields:
-
-```json
-{
-  "type": "centerBlock",
-  "children": [
-    {
-      "type": "paragraph",
-      "children": [
-        {
-          "type": "text",
-          "value": "first line"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "children": [
-        {
-          "type": "text",
-          "value": "second line"
-        }
-      ]
-    }
-  ]
-}
-```
 ### `Drawer`
 
 ```idl
@@ -458,12 +410,60 @@ Yields:
 }
 ```
 
-### `Dynamic Block`
 ### `Footnote Definitions`
 ### `Inline Task`
 ### `List Item`
 ### `Plain List`
 ### `Table`
+
+### `Center Block`
+
+```idl
+interface CenterBlock <: GreaterElement {
+  type: 'centerBlock'
+  children: [GreaterElementContent]
+}
+```
+
+**Center Block** represents a block of text that is centered.
+
+for example, the following org:
+
+```org
+#+BEGIN_CENTER
+first line
+second line
+#+END_CENTER
+```
+
+Yields:
+
+```json
+{
+  "type": "centerBlock",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "first line"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "second line"
+        }
+      ]
+    }
+  ]
+}
+```
+### `Dynamic Block`
 ### `Comment Block`
 
 ```idl
@@ -547,7 +547,6 @@ Yields:
   "value": "first line\nsecond *line*"
 }
 ```
-
 ### `Export Block`
 
 ```idl
@@ -587,7 +586,6 @@ Yields:
   "value": "<html></html>"
 }
 ```
-
 ### `Source Block`
 
 ```idl
@@ -632,7 +630,6 @@ Yields:
   "value": "console.log('hello world');"
 }
 ```
-
 ### `Verse Block`
 
 ```idl
@@ -1465,7 +1462,7 @@ Yields:
 }
 ```
 
-### Table Cell
+
 
 ### `Timestamp`
 
