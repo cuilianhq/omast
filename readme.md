@@ -29,6 +29,7 @@ See [releases][] for released documents.
     - [`Section`](#section)
     - [`Drawer`](#drawer)
     - [`Property Drawer`](#property-drawer)
+    - [`Node Property`](#node-property)
     - [`Footnote Definitions`](#footnote-definitions)
     - [`Inline Task`](#inline-task)
     - [`List Item`](#list-item)
@@ -53,7 +54,6 @@ See [releases][] for released documents.
     - [`Babel Call`](#babel-call)
     - [`Affiliated Keyword`](#affiliated-keyword)
     - [`LaTeX Environment`](#latex-environment)
-    - [`Node Property`](#node-property)
     - [`Entity`](#entity)
     - [`LaTeX Fragment`](#latex-fragment)
     - [`Export Snippet`](#export-snippet)
@@ -408,6 +408,40 @@ Yields:
       "value": "2013"
     }
   ]
+}
+```
+
+### `Node Property`
+
+```idl
+interface NodeProperty <: Object {
+  type: 'node-property'
+  name: string
+  value?: string
+}
+```
+
+**Node Property** ([Lesser Element](#lesser-element)) represents a node property and can only exists in [Property Drawer](#property-drawer).
+
+A `name` field must be present.
+It represents the name of the node property.
+
+A `value` field can be present.
+It represents the value of the node property.
+
+for example, the following org:
+
+```org
+:LOCATION: Beijing
+```
+
+Yields:
+
+```json
+{
+  "type": "node-property",
+  "name": "LOCATION",
+  "value": "Beijing"
 }
 ```
 
@@ -918,40 +952,6 @@ Yields:
   "type": "latex-environment",
   "name": "align*",
   "value": "2x - 5y &= 8 \\\\\n3x + 9y &= -12"
-}
-```
-
-### `Node Property`
-
-```idl
-interface NodeProperty <: Object {
-  type: 'node-property'
-  name: string
-  value?: string
-}
-```
-
-**Node Property** ([Lesser Element](#lesser-element)) represents a node property and can only exists in [Property Drawer](#property-drawer).
-
-A `name` field must be present.
-It represents the name of the node property.
-
-A `value` field can be present.
-It represents the value of the node property.
-
-for example, the following org:
-
-```org
-:LOCATION: Beijing
-```
-
-Yields:
-
-```json
-{
-  "type": "node-property",
-  "name": "LOCATION",
-  "value": "Beijing"
 }
 ```
 
