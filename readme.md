@@ -1815,7 +1815,117 @@ Yields:
 }
 ```
 ### `Footnote Reference`
+
+```idl
+interface FootnoteReference <: Node {
+  type: 'footnote-reference'
+  subType: 'standard' | 'inline' | 'anonymous'
+  label: string?
+  definition: StandardSetObject?
+}
+```
+
+**Footnote Reference** ([Node][dfn-node]) represents a footnote reference.
+
+A `subType` field must be present.
+It represents the subtype of the footnote reference.
+
+If `label` is only present, it represents a standard footnote reference.
+
+If `label` and `definition` are both present, it represents an inline footnote reference.
+
+If `definition` is only present, it represents an anonymous footnote reference.
+
+A `label` field can be present.
+It represents the label of the footnote reference.
+
+A `definition` field can be present.
+It represents the definition of the footnote reference.
+
+for example, the following content:
+
+```org
+[fn:1]
+```
+
+Yields:
+
+```json
+{
+  "type": "footnote-reference",
+  "subType": "standard",
+  "label": "1"
+}
+```
+
+and the following content:
+
+```org
+[fn:1:definition]
+```
+
+Yields:
+
+```json
+{
+  "type": "footnote-reference",
+  "subType": "inline",
+  "label": "1",
+  "definition": {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "definition"
+      }
+    ]
+  }
+}
+```
 ### `Footnote Definitions`
+
+```interface
+interface FootnoteDefinition <: Parent {
+  type: 'footnote-definition'
+  label: string
+  children: [Element]
+}
+
+FootnoteDefinition includes AffiliatedKeywords
+```
+
+**Footnote Definition** ([Parent](#parent)) represents a footnote definition.
+
+**Footnote Definition** includes mixins **Affiliated Keywords** ([Affiliated Keywords](#affiliated-keywords)).
+
+A `label` field must be present.
+It represents the label of the footnote definition.
+
+for example, the following content:
+
+```org
+[fn:1] A short footnote.
+```
+
+Yields:
+
+```json
+{
+  "type": "footnote-definition",
+  "label": "1",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "A short footnote."
+        }
+      ]
+    }
+  ]
+}
+```
 ### `Citation`
 ### `Citation Reference`
 ### `Macro`
