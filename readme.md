@@ -1513,6 +1513,33 @@ Yields:
 ```
 
 ### `Comment`
+
+```idl
+interface Comment <: Node {
+  type: 'comment'
+  value: string
+}
+```
+
+**Comment** ([Node](#dfn-node)) represents a comment.
+
+A `value` field must be present.
+
+for example, the following org:
+
+```org
+# the comment 1
+# the comment 2
+```
+
+Yields:
+
+```json
+{
+  "type": "comment",
+  "value": "the comment 1\nthe comment 2"
+}
+```
 ### `Fixed Width`
 
 ```idl
@@ -1545,7 +1572,6 @@ Yields:
   "value": "This is a\nfixed width area"
 }
 ```
-
 ### `Link`
 
 ```idl
