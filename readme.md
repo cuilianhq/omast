@@ -362,6 +362,62 @@ Yields:
 }
 ```
 ### `Clock`
+
+```idl
+interface Clock <: Object {
+  type: 'clock'
+  timestamp: Timestamp?
+  duration: string?
+}
+```
+
+**Clock** ([Object](#object)) represents a clock to track time spent on a task. It is normally used in a special drawer in a heading that the name is LOGBOOK.
+
+A `timestamp` field can be present.
+It represents the inactive timestamp or inactive range timestamp of the clock. See [Timestamp](#timestamp).
+
+A `duration` field can be present.
+It represents the duration of the clock. the pattern of the duration is `HH:MM`.
+
+for example, the following content:
+
+```org
+clock: [2024-10-12]
+```
+
+Yields:
+
+```json
+{
+  "type": "clock",
+  "timestamp": {
+    "type": "timestamp",
+    "subType": "inactive",
+    "start": "2024-10-12T00:00:00.000Z"
+  }
+}
+```
+
+and the following content:
+
+```org
+clock: [2017-04-05 Wed 16:42]--[2017-04-05 Wed 16:52] =>  0:10
+```
+
+Yields:
+
+```json
+{
+  "type": "clock",
+  "timestamp": {
+    "type": "timestamp",
+    "subType": "inactive-range",
+    "start": "2017-04-05T16:42:00.000Z",
+    "end": "2017-04-05T16:52:00.000Z"
+  },
+  "duration": "00:10"
+}
+```
 ### `Diary Sexp`
 ### `Section`
 
