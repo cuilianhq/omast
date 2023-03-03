@@ -48,8 +48,8 @@ See [releases][] for released documents.
     - [`Plain List`](#plain-list)
     - [`List Item`](#list-item)
     - [`Table`](#table)
-    - [`Table Row`](#table-row)
-    - [`Table Cell`](#table-cell)
+    - [`TableRow`](#tablerow)
+    - [`TableCell`](#tablecell)
     - [`Center Block`](#center-block)
     - [`Dynamic Block`](#dynamic-block)
     - [`Comment Block`](#comment-block)
@@ -88,6 +88,8 @@ See [releases][] for released documents.
       - [Fuzzy](#fuzzy)
     - [`Affiliated Keywords`](#affiliated-keywords)
     - [Planable](#planable)
+  - [Content model](#content-model)
+    - [TableCellContent](#tablecellcontent)
   - [Glossary](#glossary)
   - [References](#references)
   - [Related](#related)
@@ -962,7 +964,7 @@ Yields:
                 }
              ]
            }
-          ]
+          t ]
         }
       ],
     }
@@ -996,8 +998,217 @@ It represents the tag of the item.
 
 For an example of a list item, see [Plain List](#plain-list).
 ### `Table`
-### `Table Row`
-### `Table Cell`
+
+```idl
+interface Table <: Parent {
+  type: 'table'
+  tblFm: string?
+  children: [TableRow]
+}
+
+Table includes AffiliatedKeywords
+```
+
+**Table** ([Parent](#parent)) represents a table.
+
+**Table** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+
+**Table** can contain [Table Row](#table-row).
+
+A `tblFm` field can be present.
+It represents the formulas of a table.
+
+for example, the following content:
+
+```org
+| Name  | Phone | Age |
+|-------+-------+-----|
+| Peter |  1234 |  17 |
+| Anna  |  4321 |  25 |
+```
+
+Yields:
+
+```json
+{
+  "type": "table",
+  "children": [
+    {
+      "type": "table-row",
+      "children": [
+        {
+          "type": "table-cell",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Name"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "table-cell",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Phone"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "table-cell",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Age"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "table-row",
+      "children": [
+        {
+          "type": "table-cell",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Peter"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "table-cell",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "1234"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "table-cell",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "17"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "table-row",
+      "children": [
+        {
+          "type": "table-cell",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Anna"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "table-cell",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "4321"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "table-cell",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "25"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+### `TableRow`
+
+```idl
+interface TableRow <: Parent {
+  type: 'table-row'
+  children: [TableCell]
+}
+```
+
+**TableRow** ([Parent](#parent)) represents a row of a table.
+
+**TableRow** can be used where table content is expected.
+
+**TableRow** can contain [TableCell](#table-cell).
+
+For an example of a table row, see [Table](#table).
+### `TableCell`
+
+```
+interface TableCell <: Parent {
+  type: 'table-cell'
+  children: [TableCellContent]
+}
+```
+
+**TableCell** ([Parent](#parent)) represents a cell of a table.
+
+**TableCell** can be used where **TableRow**([TableRow](#tablerow)) content is expected.
+
+**TableCell** can contain [TableCellContent](#tablecellcontent).
+
+For an example of a table cell, see [Table](#table).
 ### `Center Block`
 
 ```idl
@@ -1870,6 +2081,12 @@ Yields:
   }
 }
 ```
+
+## Content model
+
+### TableCellContent
+
+A minimal set of objects, citations, export snippets, footnote references, links, macros, radio targets, targets, and timestamps.
 
 ## Glossary
 
