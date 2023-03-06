@@ -1990,6 +1990,38 @@ Yields:
 }
 ```
 ### `ExportSnippet`
+
+```idl
+interface ExportSnippet <: Node {
+  type: 'export-snippet'
+  backend: string
+  value: string
+}
+```
+
+**ExportSnippet** ([Node][dfn-node]) represents an export snippet.
+
+A `backend` field must be present.
+It represents the backend of the export snippet.
+
+A `value` field must be present.
+It represents the value of the export snippet.
+
+for example, the following content:
+
+```org
+@@HTML::width 1@@
+```
+
+Yields:
+
+```json
+{
+  "type": "export-snippet",
+  "backend": "HTML",
+  "value": ":width 1"
+}
+```
 ### `BabelCall`
 
 ```idl
