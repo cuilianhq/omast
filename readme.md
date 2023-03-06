@@ -71,7 +71,7 @@ See [releases][] for released documents.
     - [`ExportSnippet`](#exportsnippet)
     - [`BabelCall`](#babelcall)
     - [`InlineBabelCall`](#inlinebabelcall)
-    - [`InlineSrcBlock`](#inlinesrcblock)
+    - [`InlineSourceBlock`](#inlinesourceblock)
     - [`StatisticCookie`](#statisticcookie)
     - [`Keyword`](#keyword)
     - [`AffiliatedKeyword`](#affiliatedkeyword)
@@ -2024,7 +2024,33 @@ Yields:
   "args": "n=4"
 }
 ```
-### `InlineSrcBlock`
+### `InlineSourceBlock`
+
+```idl
+interface InlineSourceBlock <: Node {
+  type: 'inline-source-block'
+  language: string
+  value: string
+}
+```
+
+**InlineSourceBlock** ([Node][dfn-node]) represents an inline source block.
+
+for example, the following content:
+
+```org
+src_emacs{(+ 1 2)}
+```
+
+Yields:
+
+```json
+{
+  "type": "inline-source-block",
+  "language": "emacs",
+  "value": "(+ 1 2)"
+}
+```
 ### `StatisticCookie`
 
 ```idl
