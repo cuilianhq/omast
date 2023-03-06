@@ -56,7 +56,7 @@ See [releases][] for released documents.
     - [`Comment`](#comment)
     - [`FixedWidth`](#fixedwidth)
     - [`Link`](#link)
-      - [`Radio Link`](#radio-link)
+      - [`RadioLink`](#radiolink)
       - [`Plainlink`](#plainlink)
       - [`AngleLink`](#anglelink)
       - [`RegularLink`](#regularlink)
@@ -1620,7 +1620,76 @@ It represents the raw link string, which is the link string before any processin
 A `description` field can be present.
 It represents the description of the link.
 
-#### `Radio Link`
+#### `RadioLink`
+
+```idl
+interface RadioLink <: Link {
+  type: 'link'
+  subType: 'radio'
+  rawLink: string
+  target: RadioTarget
+}
+```
+
+**RadioLink** ([Link](#link)) represents radio-type links are links that are surrounded by double square brackets.
+
+A `rawLink` field must be present.
+It represents the raw link string, which is the link string before any processing.
+
+A `target` field must be present.
+It represents a [RadioTarget](#radiotarget).
+
+for example, the following org:
+
+```org
+This is some <<<*important* information>>> which we refer to lots.
+Make sure you remember the *important* information.
+```
+
+Yields:
+
+```json
+{
+  "type": "paragraph",
+  "children": [
+    {
+      "type": "plain-text",
+      "value": "This is some "
+    },
+    {
+      "type": "radio-target",
+      "rawValue": "*important* information",
+      "children": [
+        {
+          "type": "bold",
+          "value": "important",
+        },
+        {
+          "type": "plain-text",
+          "value": " information"
+        }
+      ]
+    },
+    {
+      "type": "plain-text",
+      "value": " which we refer to lots.\nMake sure you remember the "
+    },
+    { "type": "link",
+      "subType": "radio",
+      "rawLink":
+      "*important*",
+      "target":
+        { "type": "radio-target",
+          "rawValue": "*important* information",
+          "children": [
+            { "type": "bold", "value": "important" },
+            { "type": "plain-text", "value": " information." }
+          ]
+        }
+    },
+  ]
+}
+```
 #### `Plainlink`
 
 ```idl
