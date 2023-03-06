@@ -86,12 +86,12 @@ See [releases][] for released documents.
     - [`AffiliatedKeywords`](#affiliatedkeywords)
     - [Planable](#planable)
   - [`Content Model`](#content-model)
-    - [`Element`](#element)
-    - [`GreaterElement`](#greaterelement)
-    - [`LesserElement`](#lesserelement)
-    - [`Object`](#object)
-    - [`StandardSetObject`](#standardsetobject)
-    - [`MinimalSetObject`](#minimalsetobject)
+    - [`ElementContent`](#elementcontent)
+    - [`GreaterElementContent`](#greaterelementcontent)
+    - [`LesserElementContent`](#lesserelementcontent)
+    - [`ObjectContent`](#objectcontent)
+    - [`StandardSetObjectContent`](#standardsetobjectcontent)
+    - [`MinimalSetObjectContent`](#minimalsetobjectcontent)
     - [TableCellContent](#tablecellcontent)
   - [Glossary](#glossary)
   - [References](#references)
@@ -2329,50 +2329,50 @@ Each node in omast falls into one or more categories of Content that group nodes
 
 See [Objects and Elements](https://orgmode.org/worg/org-syntax.html#orgd09136d) for more information.
 
-### `Element`
+### `ElementContent`
 
 ```idl
-type Element = GreaterElement | LesserElement
+type ElementContent = GreaterElementContent | LesserElementContent
 ```
 
-**Elements** are syntactic components that exist at the same or greater scope than a [Paragraph](#paragraph).
+**ElementContent** are syntactic components that exist at the same or greater scope than a [Paragraph](#paragraph).
 
-### `GreaterElement`
+### `GreaterElementContent`
 
 ```idl
-type GreaterElement = CenterBlock | QuoteBlock | Drawer | PropertyDrawer | DynamicBlock | FootnoteDefinition | InlineTask | Item | PlainList | Table | LesserElement
+type GreaterElementContent = CenterBlock | QuoteBlock | Drawer | PropertyDrawer | DynamicBlock | FootnoteDefinition | InlineTask | Item | PlainList | Table | LesserElementContent
 ```
 
-**GreaterElement** ([Element](#element)) is a container can contain directly any [GreaterElement](#greaterelement) or [LesserElement](#lesserelement).
+**GreaterElementContent** ([Element](#element)) is a container can contain directly any [GreaterElementContent](#greaterelementcontent) or [LesserElementContent](#lesserelementcontent).
 
-### `LesserElement`
+### `LesserElementContent`
 
 ```idl
 type LesserElement =  CommentBlock | ExampleBlock | ExportBlock | SourceBlock | VerseBlock | Clock | DiarySexp | Planning | Comment | FixedWidth | HorizontalRule | Keyword | AfflicatedKeyword | LatexEnvironment | NodeProperty | Paragraph | TableRow
 ```
 
-**LesserElement** ([Element](#element)) cannot contain any other elements.
+**LesserElementContent** ([ElementContent](#elementcontent)) cannot contain any other elements.
 
-### `Object`
-
-```ild
-type Object = StandardSetObject | MinimalSetObject | CitationReference | TableCell
-```
-
-**Object** is syntactic component that exist with a smaller scope than a paragraph, and so can be contained within a paragraph.
-
-It has two useful sets to reference common objects: *standard set* ([StandardSetObject](#standardsetobject)) and *minimal set* ([MinimalSetObject](#minimalsetobject)).
-
-### `StandardSetObject`
+### `ObjectContent`
 
 ```idl
-type StandardSetObject =  MinimalSetObject | ExportSnippet | FootnoteReference | Citation | InlineBabelCall | InlineSourceBlock | LineBreak | Link | Macro | StatisticsCookie | Target | RadioTarget | Timestamp
+type ObjectContent = StandardSetObjectContent | MinimalSetObjectContent | CitationReference | TableCell
 ```
 
-### `MinimalSetObject`
+**ObjectContent** is syntactic component that exist with a smaller scope than a paragraph, and so can be contained within a paragraph.
+
+It has two useful sets to reference common objects: *standard set* ([StandardSetObjectContent](#standardsetobjectcontent)) and *minimal set* ([MinimalSetObjectContent](#minimalsetobjectcontent)).
+
+### `StandardSetObjectContent`
 
 ```idl
-type MinimalSetObject = PlainText | TextMarkup | Entity |LatexFragment | SuperScript | SubScript
+type StandardSetObjectContent =  MinimalSetObject | ExportSnippet | FootnoteReference | Citation | InlineBabelCall | InlineSourceBlock | LineBreak | Link | Macro | StatisticsCookie | Target | RadioTarget | Timestamp
+```
+
+### `MinimalSetObjectContent`
+
+```idl
+type MinimalSetObjectContent = PlainText | TextMarkup | Entity |LatexFragment | SuperScript | SubScript
 ```
 
 ### TableCellContent
