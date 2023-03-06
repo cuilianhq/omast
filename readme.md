@@ -265,7 +265,7 @@ Yields:
 ### `Timestamp`
 
 ```idl
-interface Timestamp <: Object {
+interface Timestamp <: Node {
   type: 'timestamp'
   subType: 'diary' | active' | 'inactive' | 'active-range' | 'inactive-range'
   start: Date
@@ -275,7 +275,7 @@ interface Timestamp <: Object {
 }
 ```
 
-**Timestamp** ([Object](#object)) represents a timestamp.
+**Timestamp** ([Node][dfn-node]) represents a timestamp.
 
 A `subType` field must be present.
 It represents the seven subtype of the timestamp as followings:
@@ -322,14 +322,14 @@ Yields:
 ### `Clock`
 
 ```idl
-interface Clock <: Object {
+interface Clock <: Node {
   type: 'clock'
   timestamp: Timestamp?
   duration: string?
 }
 ```
 
-**Clock** ([Object](#object)) represents a clock to track time spent on a task. It is normally used in a special drawer in a heading that the name is LOGBOOK.
+**Clock** ([Node][#dfn-node]) represents a clock to track time spent on a task. It is normally used in a special drawer in a heading that the name is LOGBOOK.
 
 A `timestamp` field can be present.
 It represents the inactive timestamp or inactive range timestamp of the clock. See [Timestamp](#timestamp).
@@ -380,13 +380,15 @@ Yields:
 ### `Section`
 
 ```idl
-interface Section <: Element {
+interface Section <: Parent {
   type: 'section'
   children: [ElementContent]
 }
 ```
 
-**Section** ([Element](#element)) contain one or more non-heading elements.
+**Section** ([Parent](#parent)) contain one or more non-heading elements.
+
+**Section** can contain any of [ElementContent](#elementcontent).
 
 for example, the following content:
 
@@ -442,14 +444,16 @@ Yields:
 ### `Drawer`
 
 ```idl
-interface Drawer <: GreaterElement {
+interface Drawer <: Parent {
   type: 'drawer'
   name: string
   children: [GreaterElementContent]
 }
 ```
 
-**Drawer** represents a drawer that contains arbitrary content associated with an entry.
+**Drawer** ([Parent](#parent)) represents a drawer that contains arbitrary content associated with an entry.
+
+**Drawer** can contain any of [GreaterElementContent](#greaterelementcontent).
 
 A `name` field must be present.
 It represents the name of the drawer.
@@ -529,14 +533,14 @@ Yields:
 ### `NodeProperty`
 
 ```idl
-interface NodeProperty <: Object {
+interface NodeProperty <: Node {
   type: 'node-property'
   name: string
   value?: string
 }
 ```
 
-**Node Property** ([LesserElement](#lesserelement)) represents a node property and can only exists in [PropertyDrawer](#propertydrawer).
+**Node Property** ([Node][dfn-node]) represents a node property and can only exists in [PropertyDrawer](#propertydrawer).
 
 A `name` field must be present.
 It represents the name of the node property.
@@ -565,13 +569,13 @@ Yields:
 ```idl
 interface Paragraph <: Parent {
   type: 'paragraph'
-  children: [Object]
+  children: [StandardSetObjectContent]
 }
 ```
 
-Paragraphs are the default element, which means that any unrecognized context is a paragraph.
+**Paragraph** ([Parent](#parent)) is the default element, which means that any unrecognized context is a paragraph.
 
-Paragraphs can contain the standard set of objects.
+**Paragraph** can contain any of [StandardSetObjectContent](#standardsetobjectcontent).
 
 For example, the following orgmode:
 
@@ -645,6 +649,8 @@ HorizontalRule includes AffiliatedKeywords
 
 **HorizontalRule** ([Node](#dfn-node)) represents a horizontal rule.
 
+**HorizontalRule** includes the mixin [AffiliatedKeywords](#affiliatedkeywords).
+
 for example, the following content:
 
 ```org
@@ -660,13 +666,13 @@ Yields:
 ```
 ### `Text`
 
-Any string that doesn’t match any other object can be considered a plain text object.
-
 ```idl
 interface Text <: Literal {
   type: 'text'
 }
 ```
+
+**Text** ([Literal](#literal)) is any string that doesn’t match any other [ObjectContent](#objectcontent) can be considered a plain text object.
 
 For example, the following orgmode:
 
@@ -687,7 +693,7 @@ interface TextMarkup <: Literal {
 }
 ```
 
-[Text](#Text) can be emphasized. There are six text markup objects to emphasis a text as follows:
+[Text](#Text) ([Literal](#literal)) can be emphasized. There are six text markup objects to emphasis a text as follows:
 
 - *, a bold object,
 - /, an italic object,
@@ -725,13 +731,13 @@ Text markup can not contain another text markup.
 ### `Subscript`
 
 ```idl
-interface Subscript <: Object {
+interface Subscript <: Literal {
   type: 'subscript'
   value: string
 }
 ```
 
-**Subscript** ([Object](#object)) represents a subscript.
+**Subscript** ([Literal](#literal)) represents a subscript.
 
 for example, the following content, x<sub>y</sub>:
 
@@ -759,13 +765,13 @@ Yields:
 ### `Superscript`
 
 ```idl
-interface Superscript <: Object {
+interface Superscript <: Literal {
   type: 'superscript'
   value: string
 }
 ```
 
-**Superscript** ([Object](#object)) represents a superscript.
+**Superscript** ([Literal](#literal)) represents a superscript.
 
 for example, the following content, x<sup>y</sup>:
 
@@ -915,7 +921,7 @@ Yields:
 ### `PlainList`
 
 ```idl
-interface PlainList <: Node {
+interface PlainList <: Parent {
   type: 'plain-list'
   subType: 'unordered' | 'ordered' | 'descriptive'
   children: [PlainList | ListItem]
@@ -988,7 +994,7 @@ Yields:
 ### `ListItem`
 
 ```idl
-interface ListItem <: Node {
+interface ListItem <: Parent {
   type: 'list-item'
   bullet: string
   counterSet?: string
@@ -997,6 +1003,8 @@ interface ListItem <: Node {
   children: [ListItemContent]
 }
 ```
+
+**ListItem** ([Parent](#parent)) represents an item of a [PlainLsit](#plainlist).
 
 A `bullet` field must be present.
 It represents the bullet of the item. the value is either asterisk (*), hyphen (-), or plus sign (+) or a number or a single letter (a-z)..
@@ -1226,20 +1234,25 @@ For an example of a table cell, see [Table](#table).
 ### `CenterBlock`
 
 ```idl
-interface CenterBlock <: GreaterElement {
+interface CenterBlock <: Parent {
   type: 'centerBlock'
   children: [GreaterElementContent]
 }
 ```
 
-**CenterBlock** represents a block of text that is centered.
+**CenterBlock** ([Parent](#parent)) represents a block of text that is centered.
+
+**CenterBlock** can contain [GreaterElementContent](#greaterelementcontent).
 
 for example, the following org:
 
 ```org
 #+BEGIN_CENTER
+
+#+BEGIN_SRC
 first line
-second line
+#+END_SRC
+
 #+END_CENTER
 ```
 
@@ -1247,26 +1260,12 @@ Yields:
 
 ```json
 {
-  "type": "centerBlock",
+  "type": "center-block",
   "children": [
     {
-      "type": "paragraph",
-      "children": [
-        {
-          "type": "text",
-          "value": "first line"
-        }
-      ]
+      "type": "source-block",
+      "value": "first line"
     },
-    {
-      "type": "paragraph",
-      "children": [
-        {
-          "type": "text",
-          "value": "second line"
-        }
-      ]
-    }
   ]
 }
 ```
@@ -1275,8 +1274,8 @@ Yields:
 
 ```idl
 interface CommentBlock <: Parent {
-  type: 'commentBlock'
-  children: [Paragraph]
+  type: 'comment-block'
+  children: [GreaterElementContent]
 }
 
 CommentBlock includes AffiliatedKeywords
@@ -1285,6 +1284,8 @@ CommentBlock includes AffiliatedKeywords
 **CommentBlock** ([Parent](#parent)) represents a block of text that is a comment. It can contain markup.
 
 **CommentBlock** includes the mixin [AffiliatedKeywords](#affiliatedkeywords).
+
+**CommentBlock** can contain [GreaterElementContent](#greaterelementcontent).
 
 for example, the following org:
 
@@ -1306,16 +1307,7 @@ Yields:
       "children": [
         {
           "type": "text",
-          "value": "first line"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "children": [
-        {
-          "type": "text",
-          "value": "second line"
+          "value": "first line\nsecond line\n"
         }
       ]
     }
@@ -1325,15 +1317,14 @@ Yields:
 ### `ExampleBlock`
 
 ```idl
-interface ExampleBlock <: LesserElement {
-  type: 'exampleBlock'
-  value: string?
+interface ExampleBlock <: Literal {
+  type: 'example-block'
 }
 
 ExampleBlock includes AffiliatedKeywords
 ```
 
-*Example Block* represents a block of text that is an example. It is not subject to markup.
+**Example Block** ([Literal](#literal)) represents a block of text that is an example. It is not subject to markup.
 
 **Example Block** includes the mixin [AffiliatedKeywords](#affiliatedkeywords).
 
@@ -1360,7 +1351,7 @@ Yields:
 interface ExportBlock <: Node {
   type: 'export-block'
   backend: string
-  value: string?
+  value: string
 }
 
 ExportBlock includes AffiliatedKeywords
@@ -1440,15 +1431,15 @@ Yields:
 ### `VerseBlock`
 
 ```idl
-interface VerseBlock <: Node {
+interface VerseBlock <: Literal {
   type: 'verse-block'
-  value: string?
+  value: string
 }
 
 VerseBlock includes AffiliatedKeywords
 ```
 
-**Verse Block** ([Node][dfn-node]) represents a block of text that is a verse. It is not subject to markup and reserve indents.
+**Verse Block** ([Literal](#literal)) represents a block of text that is a verse. It is not subject to markup and reserve indents.
 
 **Verse Block** includes the mixin [AffiliatedKeywords](#affiliatedkeywords).
 
@@ -1473,15 +1464,12 @@ Yields:
 ### `Comment`
 
 ```idl
-interface Comment <: Node {
+interface Comment <: Literal {
   type: 'comment'
-  value: string
 }
 ```
 
-**Comment** ([Node](#dfn-node)) represents a comment.
-
-A `value` field must be present.
+**Comment** ([Literal](#literal)) represents a comment.
 
 for example, the following org:
 
@@ -1501,9 +1489,8 @@ Yields:
 ### `FixedWidth`
 
 ```idl
-interface FixedWidth <: Node {
+interface FixedWidth <: Literal {
   type: 'fixed-width'
-  value: string
 }
 
 FixedWidth includes AffiliatedKeywords
@@ -1533,7 +1520,7 @@ Yields:
 ### `Link`
 
 ```idl
-interface Link <: Object {
+interface Link <: Node {
   type: 'link'
   subType: 'regular' | 'radio' | 'angle' | 'plain'
   rawLink: string
@@ -1543,7 +1530,7 @@ interface Link <: Object {
 Link includes AffiliatedKeyword
 ```
 
-**Link** represents a hyperlink.
+**Link** ([Node][dfn-node]) represents a hyperlink.
 
 **Link** includes mixins **AffiliatedKeyword** ([AffiliatedKeyword](#affiliatedkeyword)).
 
@@ -1704,16 +1691,12 @@ Yields:
 ### `Target`
 
 ``` idl
-interface Target <: Node {
+interface Target <: Literal {
   type: 'target'
-  value: Text
 }
 ```
 
-**Target** ([Node][dfn-node]) represents a target that a [**RegularLink**](#regularlink) links to. It is usually used to link to a specific location in the document as an internal link.
-
-A `value` field must be present.
-It represents the value of the target
+**Target** ([Literal](#literal)) represents a target that a [**RegularLink**](#regularlink) links to. It is usually used to link to a specific location in the document as an internal link.
 
 for example, the following content:
 
@@ -1726,25 +1709,22 @@ Yields:
 ```json
 {
   "type": "target",
-  "value": {
-    "type": "text",
-    "value": "important"
-  }
+  "value": "important"
 }
 ```
 ### `RadioTarget`
 
 ```idl
-Interface RadioTarget <: Target {
+Interface RadioTarget <: Parent {
   type: 'radio-target'
-  value: MinimalSetObject
+  children: [MinimalSetObjectContent]
 }
 ```
 
-**RadioTarget** ([Node][dfn-node]) represents a radio target that a [**RadioLink**](#radiolink) links to.
+**RadioTarget** ([Parent][#parent]) represents a radio target that a [**RadioLink**](#radiolink) links to.
 
 A `value` field must be present.
-It represents the value of the target.
+It represents the value of the target and must be one of [MinimalSetObjectContent](#minimalsetobjectcontent).
 
 for example, the following content:
 
@@ -1757,19 +1737,16 @@ Yields:
 ```json
 {
   "type": "radio-target",
-  "value": {
-      "type": "paragraph",
-      "children": [
-        {
-          "type": "bold",
-          "value": "important"
-        },
-        {
-          "type": "text",
-          "value": "information"
-        }
-      ]
-  }
+  "children": [
+    {
+      "type": "bold",
+      "value": "important"
+    },
+    {
+      "type": "text",
+      "value": "information"
+    }
+  ]
 }
 ```
 ### `FootnoteReference`
@@ -1779,7 +1756,7 @@ interface FootnoteReference <: Node {
   type: 'footnote-reference'
   subType: 'standard' | 'inline' | 'anonymous'
   label: string?
-  definition: StandardSetObject?
+  definition: StandardSetObjectContent?
 }
 ```
 
@@ -1798,7 +1775,7 @@ A `label` field can be present.
 It represents the label of the footnote reference.
 
 A `definition` field can be present.
-It represents the definition of the footnote reference.
+It represents the definition of the footnote reference and must be one of [StandardSetObjectContent](#standardsetobjectcontent).
 
 for example, the following content:
 
@@ -1846,7 +1823,7 @@ Yields:
 interface FootnoteDefinition <: Parent {
   type: 'footnote-definition'
   label: string
-  children: [Element]
+  children: [ElementContent]
 }
 
 FootnoteDefinition includes AffiliatedKeywords
@@ -1855,6 +1832,8 @@ FootnoteDefinition includes AffiliatedKeywords
 **FootnoteDefinition** ([Parent](#parent)) represents a footnote definition.
 
 **FootnoteDefinition** includes mixins **AffiliatedKeywords** ([AffiliatedKeywords](#affiliatedkeywords)).
+
+**FootnoteDefinition** contains [ElementContent](#elementcontent).
 
 A `label` field must be present.
 It represents the label of the footnote definition.
@@ -1985,7 +1964,7 @@ for an example, see [Citation](#citation).
 ### `StatisticCookie`
 
 ```idl
-interface StatisticCookie <: Object {
+interface StatisticCookie <: Node {
   type: 'statistic-cookie'
   percentage?: number
   current?: number
@@ -1993,7 +1972,7 @@ interface StatisticCookie <: Object {
 }
 ```
 
-**StatisticCookie** ([Object](#object)) represents a statistic cookie in a [Heading](#heading) that usually used to counts any TODO entries or checkbox in the heading's children.
+**StatisticCookie** ([Node][dfn-node]) represents a statistic cookie in a [Heading](#heading) that usually used to counts any TODO entries or checkbox in the heading's children.
 
 A `percentage` field can be present.
 It represents the percentage. It is a number between 0 and 100.
@@ -2039,14 +2018,14 @@ Yields:
 ### `Keyword`
 
 ```idl
-interface Keyword <: Object {
+interface Keyword <: Node {
   type: 'keyword'
   key: string
   value: string?
 }
 ```
 
-**Keyword** represents a keyword.
+**Keyword** ([Node][dfn-node]) represents a keyword.
 
 A `key` field must be present.
 It represents the key of the keyword.
@@ -2074,7 +2053,7 @@ Yields:
 ### `AffiliatedKeyword`
 
 ```idl
-interface AffiliatedKeyword <: Object {
+interface AffiliatedKeyword <: Node {
   type: 'affiliated-keyword'
   key: string?
   value: string?
@@ -2083,7 +2062,7 @@ interface AffiliatedKeyword <: Object {
 }
 ```
 
-**AffiliatedKeyword** represents an affiliated keyword.
+**AffiliatedKeyword** ([Node][dfn-node]) represents an affiliated keyword.
 It has three variants: `#+KEY: VALUE`, `#+KEY[OPTVAL]: VALUE `, and `#+attr_BACKEND: VALUE`.
 
 A `key` field can be present.
