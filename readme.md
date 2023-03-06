@@ -110,7 +110,7 @@ This specification is written in a [Web IDL][webidl]-like grammar.
 
 omast extends [unist][], a format for syntax trees, to benefit from its ecosystem of utilities.
 
-omast is not limited to Dart and can be used in other programming languages.
+omast relates to [Dart][dart] and [javascript][javascript] in that it has a rich ecosystem of utilities for working with compliant syntax trees in JavaScript. However, omast is not limited to Dart and Javascript, and can be used in other programming languages.
 
 ## Nodes
 
