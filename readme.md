@@ -33,7 +33,7 @@ See [releases][] for released documents.
     - [`Paragraph`](#paragraph)
     - [`Line Break`](#line-break)
     - [`HorizontalRule`](#horizontalrule)
-    - [`Text`](#text)
+    - [`PlainText`](#plaintext)
     - [`TextMarkup`](#textmarkup)
     - [`Subscript`](#subscript)
     - [`Superscript`](#superscript)
@@ -207,7 +207,7 @@ Yields:
   "title": {
     "type":"paragraph",
     "children": {
-      "type":"text",
+      "type":"plain-text",
       "value":"Heading"
     },
   "children": [{
@@ -215,7 +215,7 @@ Yields:
     "children": [{
       "type": "paragraph",
       "children": [{
-        "type": "text",
+        "type": "plain-text",
         "value": "This is a paragraph"
       }]
     }]
@@ -429,7 +429,7 @@ Yields:
       "type": "paragraph",
       "children": [
         {
-          "type": "text",
+          "type": "plain-text",
           "value": "An introduction."
         }
       ]
@@ -442,7 +442,7 @@ Yields:
         "type": "paragraph",
         "children": [
           {
-            "type": "text",
+            "type": "plain-text",
             "value": "A Heading"
           }
         ]
@@ -452,7 +452,7 @@ Yields:
           "type": "paragraph",
           "children": [
             {
-              "type": "text",
+              "type": "plain-text",
               "value": "Some text."
             }
           ]
@@ -501,7 +501,7 @@ Yields:
       "type": "paragraph",
       "children": [
         {
-          "type": "text",
+          "type": "plain-text",
           "value": "This is inside the drawer."
         }
       ]
@@ -611,7 +611,7 @@ yields:
 {
   type: 'paragraph',
   children: [
-    {type: 'text', value: 'Alpha bravo charlie.'}
+    {type: 'plain-text', value: 'Alpha bravo charlie.'}
   ]
 }
 ```
@@ -644,14 +644,14 @@ Yields:
       "type": "paragraph",
       "children": [
         {
-          "type": "text",
+          "type": "plain-text",
           "value": "a1"
         },
         {
           "type": "line-break"
         },
         {
-          "type": "text",
+          "type": "plain-text",
           "value": "a2"
         }
       ]
@@ -686,15 +686,15 @@ Yields:
   "type": "horizontal-rule"
 }
 ```
-### `Text`
+### `PlainText`
 
 ```idl
-interface Text <: Literal {
-  type: 'text'
+interface PlainText <: Literal {
+  type: 'plain-text'
 }
 ```
 
-**Text** ([Literal](#literal)) is any string that doesn’t match any other [ObjectContent](#objectcontent) can be considered a plain text object.
+**PlainText** ([Literal](#literal)) is any string that doesn’t match any other [ObjectContent](#objectcontent) can be considered a plain text object.
 
 For example, the following orgmode:
 
@@ -705,7 +705,7 @@ Alpha bravo charlie.
 Yields:
 
 ```js
-{type: 'text', value: 'Alpha bravo charlie.'}
+{type: 'plain-text', value: 'Alpha bravo charlie.'}
 ```
 ### `TextMarkup`
 
@@ -715,7 +715,7 @@ interface TextMarkup <: Literal {
 }
 ```
 
-[Text](#Text) ([Literal](#literal)) can be emphasized. There are six text markup objects to emphasis a text as follows:
+**TextMarkup** ([Literal](#literal)) emphasized a [PlainText](#plaintext). There are six text markup objects to emphasis a text as follows:
 
 - *, a bold object,
 - /, an italic object,
@@ -740,7 +740,7 @@ Yields:
       type: 'bold', value: 'alpha'
     },
     {
-      type:'text',
+      type:'plain-text',
       value:','}
     {
       type: 'italic', value: 'bravo'
@@ -774,7 +774,7 @@ Yields:
   "type": "paragraph",
   "children": [
     {
-      "type": "text",
+      "type": "plain-text",
       "value": "x"
     },
     {
@@ -808,7 +808,7 @@ Yields:
   "type": "paragraph",
   "children": [
     {
-      "type": "text",
+      "type": "plain-text",
       "value": "x"
     },
     {
@@ -989,7 +989,7 @@ Yields:
     {
       "type": "list-item",
       "children": [
-        {"type":"paragraph","children":[{"type":"text","value":"item 1"}]}
+        {"type":"paragraph","children":[{"type":"plain-text","value":"item 1"}]}
       ]
     },
     {
@@ -998,7 +998,7 @@ Yields:
         {
           "type":"paragraph",
           "children":[
-            {"type":"text","value":"item 2"}
+            {"type":"plain-text","value":"item 2"}
           ]},
         {
           "type": "plain-list",
@@ -1011,7 +1011,7 @@ Yields:
                {
                   "type":"paragraph",
                   "children":[
-                    {"type":"text","value":"item 2.1"}
+                    {"type":"plain-text","value":"item 2.1"}
                    ]
                 }
              ]
@@ -1111,7 +1111,7 @@ Yields:
               "type": "paragraph",
               "children": [
                 {
-                  "type": "text",
+                  "type": "plain-text",
                   "value": "Phone"
                 }
               ]
@@ -1125,7 +1125,7 @@ Yields:
               "type": "paragraph",
               "children": [
                 {
-                  "type": "text",
+                  "type": "plain-text",
                   "value": "Age"
                 }
               ]
@@ -1144,7 +1144,7 @@ Yields:
               "type": "paragraph",
               "children": [
                 {
-                  "type": "text",
+                  "type": "plain-text",
                   "value": "Peter"
                 }
               ]
@@ -1158,7 +1158,7 @@ Yields:
               "type": "paragraph",
               "children": [
                 {
-                  "type": "text",
+                  "type": "plain-text",
                   "value": "1234"
                 }
               ]
@@ -1172,7 +1172,7 @@ Yields:
               "type": "paragraph",
               "children": [
                 {
-                  "type": "text",
+                  "type": "plain-text",
                   "value": "17"
                 }
               ]
@@ -1191,7 +1191,7 @@ Yields:
               "type": "paragraph",
               "children": [
                 {
-                  "type": "text",
+                  "type": "plain-text",
                   "value": "Anna"
                 }
               ]
@@ -1205,7 +1205,7 @@ Yields:
               "type": "paragraph",
               "children": [
                 {
-                  "type": "text",
+                  "type": "plain-text",
                   "value": "4321"
                 }
               ]
@@ -1219,7 +1219,7 @@ Yields:
               "type": "paragraph",
               "children": [
                 {
-                  "type": "text",
+                  "type": "plain-text",
                   "value": "25"
                 }
               ]
@@ -1339,7 +1339,7 @@ Yields:
       "type": "paragraph",
       "children": [
         {
-          "type": "text",
+          "type": "plain-text",
           "value": "first line"
         }
       ]
@@ -1383,7 +1383,7 @@ Yields:
       "type": "paragraph",
       "children": [
         {
-          "type": "text",
+          "type": "plain-text",
           "value": "first line\nsecond line\n"
         }
       ]
@@ -1820,7 +1820,7 @@ Yields:
       "value": "important"
     },
     {
-      "type": "text",
+      "type": "plain-text",
       "value": "information"
     }
   ]
@@ -1887,7 +1887,7 @@ Yields:
     "type": "paragraph",
     "children": [
       {
-        "type": "text",
+        "type": "plain-text",
         "value": "definition"
       }
     ]
@@ -1932,7 +1932,7 @@ Yields:
       "type": "paragraph",
       "children": [
         {
-          "type": "text",
+          "type": "plain-text",
           "value": "A short footnote."
         }
       ]
