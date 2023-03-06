@@ -1235,7 +1235,7 @@ For an example of a table cell, see [Table](#table).
 
 ```idl
 interface CenterBlock <: Parent {
-  type: 'centerBlock'
+  type: 'center-block'
   children: [GreaterElementContent]
 }
 ```
