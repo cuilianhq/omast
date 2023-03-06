@@ -377,6 +377,27 @@ Yields:
 }
 ```
 ### `DiarySexp`
+
+```idl
+interface DiarySexp <: Literal {
+  type: 'diarySexp'
+}
+```
+
+**DiarySexp** ([Literal](#literal)) represents a diary sexp.
+
+```org
+%%(org-calendar-holiday)
+```
+
+Yields:
+
+```json
+{
+  "type": "diarySexp",
+  "value": "org-calendar-holiday"
+}
+```
 ### `Section`
 
 ```idl
