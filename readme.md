@@ -25,56 +25,56 @@ See [releases][] for released documents.
     - [`Planning`](#planning)
     - [`Timestamp`](#timestamp)
     - [`Clock`](#clock)
-    - [`Diary Sexp`](#diary-sexp)
+    - [`DiarySexp`](#diarysexp)
     - [`Section`](#section)
     - [`Drawer`](#drawer)
-    - [`Property Drawer`](#property-drawer)
-    - [`Node Property`](#node-property)
+    - [`PropertyDrawer`](#propertydrawer)
+    - [`NodeProperty`](#nodeproperty)
     - [`Paragraph`](#paragraph)
     - [`Line Break`](#line-break)
-    - [`Horizontal Rule`](#horizontal-rule)
+    - [`HorizontalRule`](#horizontalrule)
     - [`Text`](#text)
-    - [`Text Markup`](#text-markup)
+    - [`TextMarkup`](#textmarkup)
     - [`Subscript`](#subscript)
     - [`Superscript`](#superscript)
-    - [`LaTeX Environment`](#latex-environment)
-    - [`LaTeX Fragment`](#latex-fragment)
+    - [`LaTeXEnvironment`](#latexenvironment)
+    - [`LaTeXFragment`](#latexfragment)
     - [`Entity`](#entity)
-    - [`Inline Task`](#inline-task)
-    - [`Plain List`](#plain-list)
-    - [`List Item`](#list-item)
+    - [`InlineTask`](#inlinetask)
+    - [`PlainList`](#plainlist)
+    - [`ListItem`](#listitem)
     - [`Table`](#table)
     - [`TableRow`](#tablerow)
     - [`TableCell`](#tablecell)
-    - [`Center Block`](#center-block)
-    - [`Dynamic Block`](#dynamic-block)
-    - [`Comment Block`](#comment-block)
-    - [`Example Block`](#example-block)
-    - [`Export Block`](#export-block)
-    - [`Source Block`](#source-block)
-    - [`Verse Block`](#verse-block)
+    - [`CenterBlock`](#centerblock)
+    - [`DynamicBlock`](#dynamicblock)
+    - [`CommentBlock`](#commentblock)
+    - [`ExampleBlock`](#exampleblock)
+    - [`ExportBlock`](#exportblock)
+    - [`SourceBlock`](#sourceblock)
+    - [`VerseBlock`](#verseblock)
     - [`Comment`](#comment)
-    - [`Fixed Width`](#fixed-width)
+    - [`FixedWidth`](#fixedwidth)
     - [`Link`](#link)
       - [`Radio Link`](#radio-link)
-      - [`Plain link`](#plain-link)
-      - [`Angle Link`](#angle-link)
-      - [`Regular Link`](#regular-link)
+      - [`Plainlink`](#plainlink)
+      - [`AngleLink`](#anglelink)
+      - [`RegularLink`](#regularlink)
     - [`Target`](#target)
-    - [`Radio Target`](#radio-target)
-    - [`Footnote Reference`](#footnote-reference)
-    - [`Footnote Definitions`](#footnote-definitions)
+    - [`RadioTarget`](#radiotarget)
+    - [`FootnoteReference`](#footnotereference)
+    - [`FootnoteDefinitions`](#footnotedefinitions)
     - [`Citation`](#citation)
     - [`CitationStyle`](#citationstyle)
     - [`CitationReference`](#citationreference)
     - [`Macro`](#macro)
-    - [`Export Snippet`](#export-snippet)
-    - [`Babel Call`](#babel-call)
-    - [`Inline BabelCall`](#inline-babelcall)
-    - [`Inline SrcBlock`](#inline-srcblock)
-    - [`Statistic Cookie`](#statistic-cookie)
+    - [`ExportSnippet`](#exportsnippet)
+    - [`BabelCall`](#babelcall)
+    - [`InlineBabelCall`](#inlinebabelcall)
+    - [`InlineSrcBlock`](#inlinesrcblock)
+    - [`StatisticCookie`](#statisticcookie)
     - [`Keyword`](#keyword)
-    - [`Affiliated Keyword`](#affiliated-keyword)
+    - [`AffiliatedKeyword`](#affiliatedkeyword)
   - [`Mixin`](#mixin)
     - [`Resource`](#resource)
       - [File](#file)
@@ -83,9 +83,9 @@ See [releases][] for released documents.
       - [Custom ID](#custom-id)
       - [Code Ref](#code-ref)
       - [Fuzzy](#fuzzy)
-    - [`Affiliated Keywords`](#affiliated-keywords)
+    - [`AffiliatedKeywords`](#affiliatedkeywords)
     - [Planable](#planable)
-  - [Content model](#content-model)
+  - [`Content Model`](#content-model)
     - [`Element`](#element)
     - [`GreaterElement`](#greaterelement)
     - [`LesserElement`](#lesserelement)
@@ -376,7 +376,7 @@ Yields:
   "duration": "00:10"
 }
 ```
-### `Diary Sexp`
+### `DiarySexp`
 ### `Section`
 
 ```idl
@@ -386,7 +386,7 @@ interface Section <: Element {
 }
 ```
 
-**Sections** ([Element](#element)) contain one or more non-heading elements.
+**Section** ([Element](#element)) contain one or more non-heading elements.
 
 for example, the following content:
 
@@ -484,7 +484,7 @@ Yields:
 }
 ```
 
-### `Property Drawer`
+### `PropertyDrawer`
 
 ```idl
 interface PropertyDrawer <: Drawer {
@@ -493,9 +493,9 @@ interface PropertyDrawer <: Drawer {
 }
 ```
 
-**Property Drawer** ([Drawer](#drawer)) represents a drawer that contains properties attached to a [Heading](#heading) or [Inline Task](#inline-task) or a special [Section](#section) called zero section.
+**PropertyDrawer** ([Drawer](#drawer)) represents a drawer that contains properties attached to a [Heading](#heading) or [InlineTask](#inlinetask) or a special [Section](#section) called zero section.
 
-A `children` field must be present and can only contain [Node Property](#node-property).
+A `children` field must be present and can only contain [NodeProperty](#nodeproperty).
 
 for example, the following content:
 
@@ -526,7 +526,7 @@ Yields:
 }
 ```
 
-### `Node Property`
+### `NodeProperty`
 
 ```idl
 interface NodeProperty <: Object {
@@ -536,7 +536,7 @@ interface NodeProperty <: Object {
 }
 ```
 
-**Node Property** ([Lesser Element](#lesser-element)) represents a node property and can only exists in [Property Drawer](#property-drawer).
+**Node Property** ([LesserElement](#lesserelement)) represents a node property and can only exists in [PropertyDrawer](#propertydrawer).
 
 A `name` field must be present.
 It represents the name of the node property.
@@ -633,7 +633,7 @@ Yields:
   ]
 }
 ```
-### `Horizontal Rule`
+### `HorizontalRule`
 
 ```idl
 interface HorizontalRule <: Node {
@@ -643,7 +643,7 @@ interface HorizontalRule <: Node {
 HorizontalRule includes AffiliatedKeywords
 ```
 
-**Horizontal Rule** ([Node](#dfn-node)) represents a horizontal rule.
+**HorizontalRule** ([Node](#dfn-node)) represents a horizontal rule.
 
 for example, the following content:
 
@@ -679,7 +679,7 @@ Yields:
 ```js
 {type: 'text', value: 'Alpha bravo charlie.'}
 ```
-### `Text Markup`
+### `TextMarkup`
 
 ```
 interface TextMarkup <: Literal {
@@ -790,7 +790,7 @@ Yields:
   ]
 }
 ```
-### `LaTeX Environment`
+### `LaTeXEnvironment`
 
 ```idl
 interface LaTeXEnvironment <: Node {
@@ -802,9 +802,9 @@ interface LaTeXEnvironment <: Node {
 LaTeXEnvironment includes AffiliatedKeywords
 ```
 
-**LaTeX Environment** ([Node][dfn-node]) represents a LaTeX environment.
+**LaTeXEnvironment** ([Node][dfn-node]) represents a LaTeX environment.
 
-**LaTeX Environment** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+**LaTeX Environment** includes the mixin [AffiliatedKeywords](#affiliatedkeywords).
 
 A `name` field must be present.
 It represents the name of the LaTeX environment.
@@ -830,7 +830,7 @@ Yields:
   "value": "2x - 5y &= 8 \\\\\n3x + 9y &= -12"
 }
 ```
-### `LaTeX Fragment`
+### `LaTeXFragment`
 
 ```idl
 interface LaTeXFragment <: Node {
@@ -840,7 +840,7 @@ interface LaTeXFragment <: Node {
 }
 ```
 
-**LaTeX Fragment** ([Node](#dfn-node)) represents a LaTeX fragment.
+**LaTeXFragment** ([Node](#dfn-node)) represents a LaTeX fragment.
 
 A `name` field can be present.
 It represents the name of the LaTeX fragment.
@@ -911,8 +911,8 @@ Yields:
   "value": "ζ"
 }
 ```
-### `Inline Task`
-### `Plain List`
+### `InlineTask`
+### `PlainList`
 
 ```idl
 interface PlainList <: Node {
@@ -924,11 +924,11 @@ interface PlainList <: Node {
 PlainList includes AffiliatedKeywords
 ```
 
-**Plain List** ([Parent](#parent)) represents a list of items.
+**PlainList** ([Parent](#parent)) represents a list of items.
 
-**Plain List** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+**PlainList** includes the mixin [AffiliatedKeywords](#affiliated-keywords).
 
-**Plain List** can contain [Plain List](#plain-list) and [List Item](#list-item).
+**PlainList** can contain [PlainList](#plainlist) and [ListItem](#listitem).
 
 A `subType` field must be present.
 It represents the the list is either an ordered plain list or an unordered plain list or a descriptive list.
@@ -985,7 +985,7 @@ Yields:
   ]
 }
 ```
-### `List Item`
+### `ListItem`
 
 ```idl
 interface ListItem <: Node {
@@ -1010,7 +1010,7 @@ It represents the state of the checkbox of the item.
 A `tag` field can be present.
 It represents the tag of the item.
 
-For an example of a list item, see [Plain List](#plain-list).
+For an example of a list item, see [PlainList](#plainlist).
 ### `Table`
 
 ```idl
@@ -1025,9 +1025,9 @@ Table includes AffiliatedKeywords
 
 **Table** ([Parent](#parent)) represents a table.
 
-**Table** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+**Table** includes the mixin [AffiliatedKeywords](#affiliatedkeywords).
 
-**Table** can contain [Table Row](#table-row).
+**Table** can contain [TableRow](#tablerow).
 
 A `tblFm` field can be present.
 It represents the formulas of a table.
@@ -1204,7 +1204,7 @@ interface TableRow <: Parent {
 
 **TableRow** can be used where table content is expected.
 
-**TableRow** can contain [TableCell](#table-cell).
+**TableRow** can contain [TableCell](#tablecell).
 
 For an example of a table row, see [Table](#table).
 ### `TableCell`
@@ -1223,7 +1223,7 @@ interface TableCell <: Parent {
 **TableCell** can contain [TableCellContent](#tablecellcontent).
 
 For an example of a table cell, see [Table](#table).
-### `Center Block`
+### `CenterBlock`
 
 ```idl
 interface CenterBlock <: GreaterElement {
@@ -1232,7 +1232,7 @@ interface CenterBlock <: GreaterElement {
 }
 ```
 
-**Center Block** represents a block of text that is centered.
+**CenterBlock** represents a block of text that is centered.
 
 for example, the following org:
 
@@ -1270,8 +1270,8 @@ Yields:
   ]
 }
 ```
-### `Dynamic Block`
-### `Comment Block`
+### `DynamicBlock`
+### `CommentBlock`
 
 ```idl
 interface CommentBlock <: Parent {
@@ -1282,9 +1282,9 @@ interface CommentBlock <: Parent {
 CommentBlock includes AffiliatedKeywords
 ```
 
-**Comment Block** ([Parent](#parent)) represents a block of text that is a comment. It can contain markup.
+**CommentBlock** ([Parent](#parent)) represents a block of text that is a comment. It can contain markup.
 
-**Comment Block** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+**CommentBlock** includes the mixin [AffiliatedKeywords](#affiliatedkeywords).
 
 for example, the following org:
 
@@ -1322,7 +1322,7 @@ Yields:
   ]
 }
 ```
-### `Example Block`
+### `ExampleBlock`
 
 ```idl
 interface ExampleBlock <: LesserElement {
@@ -1335,7 +1335,7 @@ ExampleBlock includes AffiliatedKeywords
 
 *Example Block* represents a block of text that is an example. It is not subject to markup.
 
-**Example Block** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+**Example Block** includes the mixin [AffiliatedKeywords](#affiliatedkeywords).
 
 for example, the following org:
 
@@ -1354,7 +1354,7 @@ Yields:
   "value": "first line\nsecond *line*"
 }
 ```
-### `Export Block`
+### `ExportBlock`
 
 ```idl
 interface ExportBlock <: Node {
@@ -1368,7 +1368,7 @@ ExportBlock includes AffiliatedKeywords
 
 **Export Block** ([Node][dfn-node])) represents a block of text that is exported to a backend.
 
-**Export Block** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+**Export Block** includes the mixin [AffiliatedKeywords](#affiliatedkeywords).
 
 A `backend` field must be present.
 It represents the backend that the block is exported to.
@@ -1393,7 +1393,7 @@ Yields:
   "value": "<html></html>"
 }
 ```
-### `Source Block`
+### `SourceBlock`
 
 ```idl
 interface SourceBlock <: Node {
@@ -1406,9 +1406,9 @@ interface SourceBlock <: Node {
 SourceBlock includes AffiliatedKeywords
 ```
 
-**Source Block* ([Node][dfn-node]) represents a block of text that is source code.
+**SourceBlock** ([Node][dfn-node]) represents a block of text that is source code.
 
-**Source Block** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+**Source Block** includes the mixin [AffiliatedKeywords](#affiliatedkeywords).
 
 A `language` field must be present.
 It represents the language of computer code being marked up.
@@ -1437,7 +1437,7 @@ Yields:
   "value": "console.log('hello world');"
 }
 ```
-### `Verse Block`
+### `VerseBlock`
 
 ```idl
 interface VerseBlock <: Node {
@@ -1450,7 +1450,7 @@ VerseBlock includes AffiliatedKeywords
 
 **Verse Block** ([Node][dfn-node]) represents a block of text that is a verse. It is not subject to markup and reserve indents.
 
-**Verse Block** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+**Verse Block** includes the mixin [AffiliatedKeywords](#affiliatedkeywords).
 
 for example, the following org:
 
@@ -1498,7 +1498,7 @@ Yields:
   "value": "the comment 1\nthe comment 2"
 }
 ```
-### `Fixed Width`
+### `FixedWidth`
 
 ```idl
 interface FixedWidth <: Node {
@@ -1509,9 +1509,9 @@ interface FixedWidth <: Node {
 FixedWidth includes AffiliatedKeywords
 ```
 
-**Fixed Width** ([Node](#dfn-node)) represents a fixed width area.
+**FixedWidth** ([Node](#dfn-node)) represents a fixed width area.
 
-**Fixed Width** includes the mixin [Affiliated Keywords](#affiliated-keywords).
+**FixedWidth** includes the mixin [AffiliatedKeywords](#affiliated-keywords).
 
 A `value` field must be present.
 
@@ -1545,7 +1545,7 @@ Link includes AffiliatedKeyword
 
 **Link** represents a hyperlink.
 
-**Link** includes mixins **Affiliated Keyword** ([Affiliated Keyword](#affiliated-keyword)).
+**Link** includes mixins **AffiliatedKeyword** ([AffiliatedKeyword](#affiliatedkeyword)).
 
 A `subType` field must be present.
 It represents the subtype of the link. There are four subtypes, which are: `regular`, `radio`, `angle`, and `plain`.
@@ -1557,7 +1557,7 @@ A `description` field can be present.
 It represents the description of the link.
 
 #### `Radio Link`
-#### `Plain link`
+#### `Plainlink`
 
 ```idl
 interface PlainLink <: Link {
@@ -1568,9 +1568,9 @@ interface PlainLink <: Link {
 PlainLink includes Resource
 ```
 
-**Plain Link** ([Link](#link)) represents plain-type links are links that are not surrounded by angle brackets.
+**PlainLink** ([Link](#link)) represents plain-type links are links that are not surrounded by angle brackets.
 
-**Plain Link** includes mixins **Resource** ([Resource](#resource)).
+**PlainLink** includes mixins **Resource** ([Resource](#resource)).
 
 for example, the following content:
 
@@ -1590,7 +1590,7 @@ Yields:
   "path": "orgmode.org"
 }
 ```
-#### `Angle Link`
+#### `AngleLink`
 
 ```idl
 interface AngleLink <: Link {
@@ -1601,9 +1601,9 @@ interface AngleLink <: Link {
 AngleLink includes Resource
 ```
 
-**Angle Link** ([Link](#link)) represents angle-type links are links that are surrounded by angle brackets.
+**AngleLink** ([Link](#link)) represents angle-type links are links that are surrounded by angle brackets.
 
-**Angle Link** includes mixins **Resource** ([Resource](#resource)).
+**AngleLink** includes mixins **Resource** ([Resource](#resource)).
 
 for example, the following content:
 
@@ -1623,7 +1623,7 @@ Yields:
   "path": "example.com"
 }
 ```
-#### `Regular Link`
+#### `RegularLink`
 
 ```idl
 interface RegularLink <: Link {
@@ -1633,7 +1633,7 @@ interface RegularLink <: Link {
 RegularLink includes Resource
 ```
 
-**Regular links**([Link](#link)) represents the most common type of link, and structured according to one of the following two patterns:
+**Regularlinks**([Link](#link)) represents the most common type of link, and structured according to one of the following two patterns:
 [[PATHREG]] or [[PATHREG][DESCRIPTION]].
 
 **Regular links** includes [Resource](#resource).
@@ -1710,7 +1710,7 @@ interface Target <: Node {
 }
 ```
 
-**Target** ([Node][dfn-node]) represents a target that a [**Regular Link**](#regular-link) links to. It is usually used to link to a specific location in the document as an internal link.
+**Target** ([Node][dfn-node]) represents a target that a [**RegularLink**](#regularlink) links to. It is usually used to link to a specific location in the document as an internal link.
 
 A `value` field must be present.
 It represents the value of the target
@@ -1732,7 +1732,7 @@ Yields:
   }
 }
 ```
-### `Radio Target`
+### `RadioTarget`
 
 ```idl
 Interface RadioTarget <: Target {
@@ -1741,7 +1741,7 @@ Interface RadioTarget <: Target {
 }
 ```
 
-**Radio Target** ([Node][dfn-node]) represents a radio target that a [**Radio Link**](#radio-link) links to.
+**RadioTarget** ([Node][dfn-node]) represents a radio target that a [**RadioLink**](#radiolink) links to.
 
 A `value` field must be present.
 It represents the value of the target.
@@ -1772,7 +1772,7 @@ Yields:
   }
 }
 ```
-### `Footnote Reference`
+### `FootnoteReference`
 
 ```idl
 interface FootnoteReference <: Node {
@@ -1840,7 +1840,7 @@ Yields:
   }
 }
 ```
-### `Footnote Definitions`
+### `FootnoteDefinitions`
 
 ```interface
 interface FootnoteDefinition <: Parent {
@@ -1852,9 +1852,9 @@ interface FootnoteDefinition <: Parent {
 FootnoteDefinition includes AffiliatedKeywords
 ```
 
-**Footnote Definition** ([Parent](#parent)) represents a footnote definition.
+**FootnoteDefinition** ([Parent](#parent)) represents a footnote definition.
 
-**Footnote Definition** includes mixins **Affiliated Keywords** ([Affiliated Keywords](#affiliated-keywords)).
+**FootnoteDefinition** includes mixins **AffiliatedKeywords** ([AffiliatedKeywords](#affiliatedkeywords)).
 
 A `label` field must be present.
 It represents the label of the footnote definition.
@@ -1978,11 +1978,11 @@ Both `prefix` and `suffix` fields giving information for the citation but not in
 
 for an example, see [Citation](#citation).
 ### `Macro`
-### `Export Snippet`
-### `Babel Call`
-### `Inline BabelCall`
-### `Inline SrcBlock`
-### `Statistic Cookie`
+### `ExportSnippet`
+### `BabelCall`
+### `InlineBabelCall`
+### `InlineSrcBlock`
+### `StatisticCookie`
 
 ```idl
 interface StatisticCookie <: Object {
@@ -1993,7 +1993,7 @@ interface StatisticCookie <: Object {
 }
 ```
 
-**Statistic Cookie** ([Object](#object)) represents a statistic cookie in a [Heading](#heading) that usually used to counts any TODO entries or checkbox in the heading's children.
+**StatisticCookie** ([Object](#object)) represents a statistic cookie in a [Heading](#heading) that usually used to counts any TODO entries or checkbox in the heading's children.
 
 A `percentage` field can be present.
 It represents the percentage. It is a number between 0 and 100.
@@ -2071,7 +2071,7 @@ Yields:
 ```
 
 
-### `Affiliated Keyword`
+### `AffiliatedKeyword`
 
 ```idl
 interface AffiliatedKeyword <: Object {
@@ -2083,7 +2083,7 @@ interface AffiliatedKeyword <: Object {
 }
 ```
 
-**Affiliated Keyword** represents an affiliated keyword.
+**AffiliatedKeyword** represents an affiliated keyword.
 It has three variants: `#+KEY: VALUE`, `#+KEY[OPTVAL]: VALUE `, and `#+attr_BACKEND: VALUE`.
 
 A `key` field can be present.
@@ -2240,7 +2240,7 @@ interface Fuzzy <: Resource {
 A `fuzzy` field must be present.
 It represents the fuzzy path of the link.
 
-### `Affiliated Keywords`
+### `AffiliatedKeywords`
 
 ```idl
 interface mixin AffiliatedKeywords {
@@ -2248,10 +2248,10 @@ interface mixin AffiliatedKeywords {
 }
 ```
 
-**Affiliated Keywords** represents a list of [Affiliated Keyword](#affiliated-keyword) objects that attached to an [Element](#element).
+**AffiliatedKeywords** represents a list of [AffiliatedKeyword](#affiliatedkeyword) objects that attached to an [Element](#element).
 
 A `affiliated` field can be present.
-It represents a list of [Affiliated Keyword](#affiliated-keyword) objects.
+It represents a list of [AffiliatedKeyword](#affiliatedkeyword) objects.
 
 for example, the following orgmode documents a link with affiliated keywords:
 
@@ -2323,7 +2323,7 @@ Yields:
 }
 ```
 
-## Content model
+## `Content Model`
 
 Each node in omast falls into one or more categories of Content that group nodes with similar characteristics together.
 
