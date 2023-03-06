@@ -918,6 +918,16 @@ Yields:
 }
 ```
 ### `InlineTask`
+
+```idl
+interface InlineTask <: Heading {
+  type: 'inline-task'
+}
+```
+
+**InlineTask** ([Heading](#heading)) represents an inline task.
+
+for an example, see [Heading](#heading).
 ### `PlainList`
 
 ```idl
