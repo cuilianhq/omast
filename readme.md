@@ -1957,6 +1957,38 @@ Both `prefix` and `suffix` fields giving information for the citation but not in
 
 for an example, see [Citation](#citation).
 ### `Macro`
+
+```idl
+interface Macro <: Node {
+  type: 'macro'
+  name: string
+  args: string?
+}
+```
+
+**Macro** ([Node][dfn-node]) represents a macro.
+
+A `name` field must be present.
+It represents the name of the macro.
+
+A `args` field can be present.
+It represents the arguments of a macro.
+
+for example, the following content:
+
+```org
+{{{one_arg_macro(1)}}}
+```
+
+Yields:
+
+```json
+{
+  "type": "macro",
+  "name": "one_arg_macro",
+  "args": "1"
+}
+```
 ### `ExportSnippet`
 ### `BabelCall`
 
