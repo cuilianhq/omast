@@ -118,12 +118,12 @@ omast is not limited to Dart and can be used in other programming languages.
 
 ```idl
 interface Parent <: UnistParent {
-  children: [Element | Object]
+  children: [ElementContent | ObjectContent]
 }
 ```
 
 **Parent** ([UnistParent][dfn-unist-parent]) represents an abstract interface in omast containing other nodes (said to be children).
-Its content is limited to only either Element or Object.
+Its content is limited to only either [ElementContent](#elementcontent) or [Object](#objectcontent).
 
 ### `Literal`
 
