@@ -1418,7 +1418,7 @@ Yields:
 
 ```json
 {
-  "type": "exampleBlock",
+  "type": "example-block",
   "value": "first line\nsecond *line*"
 }
 ```
