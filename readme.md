@@ -21,10 +21,6 @@ See [releases][] for released documents.
     - [`Parent`](#parent)
     - [`Literal`](#literal)
     - [`Root`](#root)
-    - [`Element`](#element)
-    - [`GreaterElement`](#greaterelement)
-    - [`Lesser Element`](#lesser-element)
-    - [`Object`](#object)
     - [`Heading`](#heading)
     - [`Planning`](#planning)
     - [`Timestamp`](#timestamp)
@@ -88,6 +84,12 @@ See [releases][] for released documents.
     - [`Affiliated Keywords`](#affiliated-keywords)
     - [Planable](#planable)
   - [Content model](#content-model)
+    - [`Element`](#element)
+    - [`GreaterElement`](#greaterelement)
+    - [`LesserElement`](#lesserelement)
+    - [`Object`](#object)
+    - [`StandardSetObject`](#standardsetobject)
+    - [`MinimalSetObject`](#minimalsetobject)
     - [TableCellContent](#tablecellcontent)
     - [CitationStyle](#citationstyle)
     - [CitationReference](#citationreference)
@@ -143,51 +145,6 @@ interface Root <: Parent {
   type: 'root'
 }
 ```
-### `Element`
-
-Elements are syntactic components that exist at the same or greater scope than a paragraph.
-
-```idl
-interface Element <: Parent {
-  children: [ElementContent]
-}
-```
-
-### `GreaterElement`
-A container can contain directly any other [Element] or [GreaterElement]
-
-```idl
-interface GreaterElement <: Parent {
-  children: [GreaterElementContent]
-}
-```
-### `Lesser Element`
-
-```idl
-interface LesserElement <: Element {
-  value: string?
-  children: [Object?]
-}
-```
-
-Lesser elements ([Element](#element)) are elements that cannot contain any other elements. some of them contain objects.
-
-A `value` field can be present.
-It represents the CONTENTS of the element.
-
-A `children` must be present.
-It represents the children of the element. If `value` field is present, a `children` must be an empty list.
-
-### `Object`
-
-```idl
-interface Object <: Node {
-  value: any
-}
-```
-
-Objects are syntactic components that exist with a smaller scope than a paragraph, and so can be contained within a paragraph.
-
 ### `Heading`
 
 ```idl
@@ -2329,9 +2286,59 @@ Yields:
 
 ## Content model
 
+Each node in omast falls into one or more categories of Content that group nodes with similar characteristics together.
+
+See [Objects and Elements](https://orgmode.org/worg/org-syntax.html#orgd09136d) for more information.
+
+### `Element`
+
+```idl
+type Element = GreaterElement | LesserElement
+```
+
+**Elements** are syntactic components that exist at the same or greater scope than a [Paragraph](#paragraph).
+
+### `GreaterElement`
+
+```idl
+type GreaterElement = CenterBlock | QuoteBlock | Drawer | PropertyDrawer | DynamicBlock | FootnoteDefinition | InlineTask | Item | PlainList | Table | LesserElement
+```
+
+**GreaterElement** ([Element](#element)) is a container can contain directly any [GreaterElement](#greaterelement) or [LesserElement](#lesserelement).
+
+### `LesserElement`
+
+```idl
+type LesserElement =  CommentBlock | ExampleBlock | ExportBlock | SourceBlock | VerseBlock | Clock | DiarySexp | Planning | Comment | FixedWidth | HorizontalRule | Keyword | AfflicatedKeyword | LatexEnvironment | NodeProperty | Paragraph | TableRow
+```
+
+**LesserElement** ([Element](#element)) cannot contain any other elements.
+
+### `Object`
+
+```ild
+type Object = StandardSetObject | MinimalSetObject | CitationReference | TableCell
+```
+
+**Object** is syntactic component that exist with a smaller scope than a paragraph, and so can be contained within a paragraph.
+
+It has two useful sets to reference common objects: *standard set* ([StandardSetObject](#standardsetobject)) and *minimal set* ([MinimalSetObject](#minimalsetobject)).
+
+### `StandardSetObject`
+
+```idl
+type StandardSetObject =  MinimalSetObject | ExportSnippet | FootnoteReference | Citation | InlineBabelCall | InlineSourceBlock | LineBreak | Link | Macro | StatisticsCookie | Target | RadioTarget | Timestamp
+```
+
+### `MinimalSetObject`
+
+```idl
+type MinimalSetObject = PlainText | TextMarkup | Entity |LatexFragment | SuperScript | SubScript
+```
+
 ### TableCellContent
 
-A minimal set of objects, citations, export snippets, footnote references, links, macros, radio targets, targets, and timestamps.
+A minimal set of objects , citations, export snippets, footnote references, links, macros, radio targets, targets, and timestamps.
 
 ### CitationStyle
 
