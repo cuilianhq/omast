@@ -1270,6 +1270,51 @@ Yields:
 }
 ```
 ### `DynamicBlock`
+
+```idl
+interface DynamicBlock <: Parent {
+  type: 'dynamic-block'
+  name: string
+  parameters: string?
+  children: [GreaterElementContent]
+}
+
+DynamicBlock includes AffiliatedKeywords
+```
+
+**DynamicBlock** ([Parent](#parent)) represents a block of text that is generated dynamically.
+
+**DynamicBlock** includes the mixin [AffiliatedKeywords](#affiliatedkeywords).
+
+**DynamicBlock** can contain [GreaterElementContent](#greaterelementcontent).
+
+for example, the following org:
+
+```org
+#+BEGIN: example
+first line
+#+END:
+```
+
+Yields:
+
+```json
+{
+  "type": "dynamic-block",
+  "name": "example",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "first line"
+        }
+      ]
+    }
+  ]
+}
+```
 ### `CommentBlock`
 
 ```idl
