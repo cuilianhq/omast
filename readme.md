@@ -1959,7 +1959,71 @@ for an example, see [Citation](#citation).
 ### `Macro`
 ### `ExportSnippet`
 ### `BabelCall`
+
+```idl
+interface BabelCall <: Node {
+  type: 'babel-call'
+  name: string
+  args: string?
+  argsInHeader: string?
+  argsInEnd: string?
+}
+```
+
+**BabelCall** ([Node][dfn-node]) represents a babel call.
+
+A `name` field must be present.
+It represents the name of the name of a code block.
+
+A `args` field can be present.
+It represents the arguments of a babel call.
+
+A `argsInHeader` field can be present.
+It represents the arguments in the header of a code block.
+
+A `argsInEnd` field can be present.
+It represents the arguments in the end of a code block.
+
+for example, the following content:
+
+```org
+#+CALL: double(n=4)
+```
+
+Yields:
+
+```json
+{
+  "type": "babel-call",
+  "name": "double",
+  "args": "n=4"
+}
+```
 ### `InlineBabelCall`
+
+```idl
+interface InlineBabelCall <: BabelCall {
+  type: 'inline-babel-call'
+}
+```
+
+**InlineBabelCall** ([BabelCall](#babelcall)) represents an inline babel call.
+
+for example, the following content:
+
+```org
+call_double(n=4)
+```
+
+Yields:
+
+```json
+{
+  "type": "inline-babel-call",
+  "name": "double",
+  "args": "n=4"
+}
+```
 ### `InlineSrcBlock`
 ### `StatisticCookie`
 
