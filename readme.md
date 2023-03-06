@@ -65,6 +65,8 @@ See [releases][] for released documents.
     - [`Footnote Reference`](#footnote-reference)
     - [`Footnote Definitions`](#footnote-definitions)
     - [`Citation`](#citation)
+    - [`CitationStyle`](#citationstyle)
+    - [`CitationReference`](#citationreference)
     - [`Macro`](#macro)
     - [`Export Snippet`](#export-snippet)
     - [`Babel Call`](#babel-call)
@@ -91,8 +93,6 @@ See [releases][] for released documents.
     - [`StandardSetObject`](#standardsetobject)
     - [`MinimalSetObject`](#minimalsetobject)
     - [TableCellContent](#tablecellcontent)
-    - [CitationStyle](#citationstyle)
-    - [CitationReference](#citationreference)
   - [Glossary](#glossary)
   - [References](#references)
   - [Related](#related)
@@ -1938,6 +1938,45 @@ Yields:
   "globalSuffix": "by foo"
 }
 ```
+### `CitationStyle`
+
+```idl
+interface CitationStyle <: Node {
+  type: 'citation-style'
+  style: string
+  variant: string?
+}
+```
+
+**CitationStyle** represents a citation style.
+
+A `style` field must be present.
+
+A `variant` field can be present.
+
+for an example, see [Citation](#citation).
+### `CitationReference`
+
+```idl
+interface CitationReference <: Node {
+  type: 'citation-reference'
+  key: string
+  prefix: Object?
+  suffix: Object?
+}
+```
+**CitationReference** represents a reference a reference to an individual resource is given in a [Citation](#citation).
+
+A `key` field must be present.
+It represents a citation key identifying a reference in the bibliography.
+
+A `prefix` field can be present.
+
+A `suffix` field can be present.
+
+Both `prefix` and `suffix` fields giving information for the citation but not included in a citation.
+
+for an example, see [Citation](#citation).
 ### `Macro`
 ### `Export Snippet`
 ### `Babel Call`
@@ -2340,46 +2379,6 @@ type MinimalSetObject = PlainText | TextMarkup | Entity |LatexFragment | SuperSc
 
 A minimal set of objects , citations, export snippets, footnote references, links, macros, radio targets, targets, and timestamps.
 
-### CitationStyle
-
-```idl
-interface CitationStyle <: Node {
-  type: 'citation-style'
-  style: string
-  variant: string?
-}
-```
-
-**CitationStyle** represents a citation style.
-
-A `style` field must be present.
-
-A `variant` field can be present.
-
-for an example, see [Citation](#citation).
-### CitationReference
-
-```idl
-interface CitationReference <: Node {
-  type: 'citation-reference'
-  key: string
-  prefix: Object?
-  suffix: Object?
-}
-```
-
-**CitationReference** represents a reference a reference to an individual resource is given in a [Citation](#citation).
-
-A `key` field must be present.
-It represents a citation key identifying a reference in the bibliography.
-
-A `prefix` field can be present.
-
-A `suffix` field can be present.
-
-Both `prefix` and `suffix` fields giving information for the citation but not included in a citation.
-
-for an example, see [Citation](#citation).
 ## Glossary
 
 See the [unist glossary][glossary].
