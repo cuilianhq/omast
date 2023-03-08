@@ -710,12 +710,13 @@ Yields:
 ### `TextMarkup`
 
 ```
-interface TextMarkup <: Literal {
+interface TextMarkup <: Node {
   type: 'bold' | 'italic' | 'underline' | 'verbatim' | 'code' | 'strike-through'
+  value: PlainText
 }
 ```
 
-**TextMarkup** ([Literal](#literal)) emphasized a [PlainText](#plaintext). There are six text markup objects to emphasis a text as follows:
+**TextMarkup** ([Node][dfn-node]) emphasized a [PlainText](#plaintext). There are six text markup objects to emphasis a text as follows:
 
 - *, a bold object,
 - /, an italic object,
@@ -737,13 +738,22 @@ Yields:
   type: 'paragraph',
   children: [
     {
-      type: 'bold', value: 'alpha'
+      type: 'bold', value:
+      {
+        type: 'plain-text',
+        value: 'alpha'
+      }
     },
     {
       type:'plain-text',
       value:','}
     {
-      type: 'italic', value: 'bravo'
+      type: 'italic',
+      value:
+      {
+        type: 'plain-text',
+        value: 'italic'
+      }
     }
   ]
 }
@@ -753,13 +763,13 @@ Text markup can not contain another text markup.
 ### `Subscript`
 
 ```idl
-interface Subscript <: Literal {
+interface Subscript <: Node {
   type: 'subscript'
-  value: string
+  value: PlainText
 }
 ```
 
-**Subscript** ([Literal](#literal)) represents a subscript.
+**Subscript** ([Node][dfn-node]) represents a subscript.
 
 for example, the following content, x<sub>y</sub>:
 
@@ -775,11 +785,17 @@ Yields:
   "children": [
     {
       "type": "plain-text",
-      "value": "x"
+      "value": {
+        "type": "plain-text",
+        "value": "x"
+      }
     },
     {
       "type": "subscript",
-      "value": "y"
+      "value": {
+        "type": "plain-text",
+        "value": "y"
+      }
     }
   ]
 }
@@ -787,13 +803,13 @@ Yields:
 ### `Superscript`
 
 ```idl
-interface Superscript <: Literal {
+interface Superscript <: Node {
   type: 'superscript'
   value: string
 }
 ```
 
-**Superscript** ([Literal](#literal)) represents a superscript.
+**Superscript** ([Node][dfn-node]) represents a superscript.
 
 for example, the following content, x<sup>y</sup>:
 
@@ -813,7 +829,10 @@ Yields:
     },
     {
       "type": "superscript",
-      "value": "y"
+      "value": {
+        "type": "plain-text",
+        "value": "y"
+      }
     }
   ]
 }
