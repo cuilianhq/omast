@@ -529,6 +529,7 @@ for example, the following content:
 :PROPERTIES:
 :ID:       0a1b2c3d
 :YEAR:      2013
+:END:
 ```
 
 Yields:
