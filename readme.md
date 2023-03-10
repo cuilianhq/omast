@@ -47,6 +47,7 @@ See [releases][] for released documents.
     - [`TableRow`](#tablerow)
     - [`TableCell`](#tablecell)
     - [`CenterBlock`](#centerblock)
+    - [`QuoteBlock`](#quoteblock)
     - [`DynamicBlock`](#dynamicblock)
     - [`CommentBlock`](#commentblock)
     - [`ExampleBlock`](#exampleblock)
@@ -624,7 +625,7 @@ interface LineBreak <: Node {
 }
 ```
 
-**Line Break** ([Node][dfn-node]) represents a line break, such as in [Quote Block](#quote-block) and [Paragraph](#paragraph).
+**Line Break** ([Node][dfn-node]) represents a line break, such as in [QuoteBlock](#quote-block) and [Paragraph](#paragraph).
 
 for example, the following content:
 
@@ -1318,6 +1319,45 @@ Yields:
       "type": "source-block",
       "value": "first line"
     },
+  ]
+}
+```
+### `QuoteBlock`
+
+```idl
+interface QuoteBlock <: Parent {
+  type: 'quote-block'
+  children: [GreaterElementContent]
+}
+```
+
+**QuoteBlock** ([Parent](#parent)) represents a block of text that is quoted.
+
+**QuoteBlock** can contain [GreaterElementContent](#greaterelementcontent).
+
+for example, the following org:
+
+```org
+#+BEGIN_QUOTE
+this is a quote
+#+END_QUOTE
+```
+
+Yields:
+
+```json
+{
+  "type": "quote-block",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "plain-text",
+          "value": "this is a quote"
+        }
+      ]
+    }
   ]
 }
 ```
